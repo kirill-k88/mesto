@@ -5,6 +5,18 @@
   row-gap: 16px;
   column-gap: 18px;
   align-items: center;
-  min-width: 336px;
   height: 73px;
+}
+
+@media screen and (max-width: 1079px) {
+  .profile__info {
+    margin-top: 29px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profile__info {
+    row-gap: 14px;
+    column-gap: 10px;
+  }
 }
