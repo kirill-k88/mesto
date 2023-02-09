@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 42px 18px;
-  row-gap: 16px;
+  row-gap: 8px;
   column-gap: 18px;
   align-items: center;
   height: 73px;
@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 600px) {
   .profile__info {
-    row-gap: 14px;
+    row-gap: 7px;
     column-gap: 10px;
   }
 }
