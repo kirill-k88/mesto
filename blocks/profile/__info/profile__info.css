@@ -6,11 +6,13 @@
   column-gap: 18px;
   align-items: center;
   height: 73px;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 1079px) {
   .profile__info {
     margin-top: 29px;
+    margin-right: 0;
   }
 }
 
