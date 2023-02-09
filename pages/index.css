@@ -16,5 +16,9 @@
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 
+@import url(../blocks/photo-grid/photo-grid.css);
+@import url(../blocks/photo-grid/__items/photo-grid__items.css);
+@import url(../blocks/photo-grid/__item/photo-grid__item.css);
+
 /* Стили для миксов*/
 @import url(../blocks/common-link/common-link.css);
