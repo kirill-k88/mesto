@@ -1,0 +1,7 @@
+.popup__button-close {
+  position: relative;
+  top: calc(-100% - 40px);
+  right: calc(-100% - 8px);
+  width: 32px;
+  height: 32px;
+}

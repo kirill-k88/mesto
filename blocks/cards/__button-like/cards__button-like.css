@@ -2,3 +2,7 @@
   width: 22px;
   height: 19px;
 }
+
+.cards__button-like:hover {
+  opacity: 0.5;
+}

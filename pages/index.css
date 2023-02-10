@@ -1,6 +1,8 @@
 /* Общие стили */
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/Inter/inter.css);
+/* Стили для миксов*/
+@import url(../blocks/common-link/common-link.css);
 /*Стиль страницы*/
 @import url(../blocks/root/root.css);
 @import url(../blocks/page/page.css);
@@ -18,18 +20,29 @@
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 @import url(../blocks/profile/__button-add-img/profile__button-add-img.css);
 
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__button-close/popup__button-close.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__field/popup__field.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_name/popup__input_name.css);
+@import url(../blocks/popup/__input/_ocupation/popup__input_ocupation.css);
+@import url(../blocks/popup/__button-save/popup__button-save.css);
+
 @import url(../blocks/cards/cards.css);
 @import url(../blocks/cards/__photo/cards__photo.css);
 @import url(../blocks/cards/__caption/cards__caption.css);
 @import url(../blocks/cards/__button-like/cards__button-like.css);
+@import url(../blocks/cards/__button-like-svg/cards___button-like-svg.css);
+@import url(../blocks/cards/__button-like-svg/_active/cards__button-like-svg_active.css);
 @import url(../blocks/cards/__card/cards__card.css);
 @import url(../blocks/cards/__title/cards__title.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
-
-/* Стили для миксов*/
-@import url(../blocks/common-link/common-link.css);
 
 /* * {
   outline: solid red;

@@ -12,7 +12,7 @@
   <div class="root">
 
     <header class="header">
-      <a href="#" class="header__link common-link">
+      <a href="#" class="header__link common-link" target="_blank">
         <img class="header__logo" src="./images/header/header-logo.svg" alt="Лого">
       </a>
     </header>
@@ -22,55 +22,87 @@
         <img class="profile__avatar" src="./images/profile/profile-avatar.jpg" alt="Аватар">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <img class="profile__button-edit" src="./images/profile/profile-button-edit.svg" alt="Кнопка изменить">
+          <img class="profile__button-edit common-link" src="./images/profile/profile-button-edit.svg"
+            alt="Кнопка изменить">
           <p class="profile__ocupation">Исследователь океана</p>
         </div>
-        <div class="profile__button-add">
+        <div class="profile__button-add common-link">
           <img class="profile__button-add-img" src="./images/profile/profile-button-add.svg" alt="Кнопка добавить">
         </div>
       </section>
+
+      <div class="popup">
+        <div class="popup__container">
+          <form class="popup__form">
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <fieldset class="popup__field">
+              <input class="popup__input popup__input_name" id="heading" name="name" type="text" placeholder="Имя"
+                required>
+              <input class="popup__input popup__input_ocupation" id="heading" name="ocupation" type="text"
+                placeholder="Должность" required></input>
+              <div class="popup__button-save common-link">
+                <p>Сохранить</p>
+              </div>
+            </fieldset>
+          </form>
+          <img class="popup__button-close common-link"" src=" ./images/popup/popup-button-close.svg"
+            alt="Кнопка закрыть">
+        </div>
+      </div>
 
       <section class="cards">
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-karach.jpg" alt="Карачаевск">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Карачаевск</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Гора Эльбрус</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Домбай</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Гора Эльбрус</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Домбай</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
         <figure class="cards__card">
           <img class="cards__photo" src="./images/cards/cards-karach.jpg" alt="Карачаевск">
           <figcaption class="cards__caption">
             <h2 class="cards__title">Карачаевск</h2>
-            <img class="cards__button-like" src="./images/cards/cards-like.svg" alt="Кнопка лайк">
+            <svg class="cards__button-like common-link">
+              <path class="cards__button-like-svg" d="" />
+            </svg>
           </figcaption>
         </figure>
       </section>
@@ -81,6 +113,8 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+
+  <script src="./pages/script.js"></script>
 </body>
 
 </html>
