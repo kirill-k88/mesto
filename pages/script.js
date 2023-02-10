@@ -22,3 +22,29 @@ function togglePopupVisability() {
   let popup = document.querySelector(".popup");
   popup.classList.toggle("popup_opened");
 }
+
+//Получить форму
+let formElement = document.querySelector(".popup__form");
+
+//Получить поля ввода
+let inputName = formElement.querySelector(".popup__input_name");
+let inputOcupation = formElement.querySelector(".popup__input_ocupation");
+
+//Нажатие на кнопку сохранить
+formElement.addEventListener("submit", handleFormSubmit);
+
+//Сохранить значения, глушим стандартный обработчик
+function handleFormSubmit(evt) {
+  //глушим стандартное действие submit
+  evt.preventDefault();
+
+  //Получить поле имя на странице
+  let profileName = document.querySelector(".profile__name");
+  //добавляем на экран значения
+  profileName.textContent = inputName.value;
+
+  //Получить поле имя на странице
+  let profileOcupation = document.querySelector(".profile__ocupation");
+  //добавляем на экран значения
+  profileOcupation.textContent = inputOcupation.value;
+}

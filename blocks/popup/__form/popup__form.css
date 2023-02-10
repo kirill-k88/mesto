@@ -6,3 +6,11 @@
   width: calc(100% - 36px * 2);
   height: calc(100% - 34px - 37px);
 }
+
+@media screen and (max-width: 600px) {
+  .popup__form {
+    padding: 25px 22px;
+    width: calc(100% - 22px * 2);
+    height: calc(100% - 25px * 2);
+  }
+}

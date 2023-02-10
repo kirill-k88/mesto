@@ -5,3 +5,12 @@
   width: 32px;
   height: 32px;
 }
+
+@media screen and (max-width: 600px) {
+  .popup__button-close {
+    top: calc(-100% - 36px);
+    right: calc(-100% + 20px);
+    width: 20px;
+    height: 20px;
+  }
+}
