@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 42px 18px;
-  row-gap: 8px;
-  column-gap: 18px;
+  row-gap: 13px;
+  column-gap: 23px;
   align-items: center;
   height: 73px;
   margin-right: 10px;
@@ -11,14 +11,15 @@
 
 @media screen and (max-width: 1079px) {
   .profile__info {
-    margin-top: 29px;
+    margin-top: 20px;
     margin-right: 0;
   }
 }
 
 @media screen and (max-width: 600px) {
   .profile__info {
-    row-gap: 7px;
+    row-gap: 3px;
+    margin-left: 22px;
     column-gap: 10px;
   }
 }
