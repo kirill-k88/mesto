@@ -31,10 +31,17 @@ let inputName = formElement.querySelector(".popup__input_name");
 let inputOcupation = formElement.querySelector(".popup__input_ocupation");
 
 //Нажатие на кнопку сохранить
-formElement.addEventListener("submit", handleFormSubmit);
+formElement.addEventListener("submit", saveForm);
+
+//Нажатие на кнопку Enter
+formElement.addEventListener("keydown", function () {
+  if (event.key == "Enter") {
+    saveForm(event);
+  }
+});
 
 //Сохранить значения, глушим стандартный обработчик
-function handleFormSubmit(evt) {
+function saveForm(evt) {
   //глушим стандартное действие submit
   evt.preventDefault();
 

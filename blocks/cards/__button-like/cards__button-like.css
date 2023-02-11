@@ -1,6 +1,7 @@
 .cards__button-like {
   width: 22px;
   height: 19px;
+  margin-right: 5px;
 }
 
 .cards__button-like:hover {

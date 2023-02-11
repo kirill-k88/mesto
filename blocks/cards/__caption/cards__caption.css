@@ -5,6 +5,7 @@
   align-items: center;
   margin: 25px 15px 31px 21px;
   padding: 0;
-  width: calc(100% - 42px);
+  width: calc(100% - 36px);
   height: 23px;
+  column-gap: 20px;
 }
