@@ -4,8 +4,13 @@ let buttonLikes = document.querySelectorAll(".cards__button-like");
 //Изменить svg-картинку лайка на карточке при нажатии
 buttonLikes.forEach((buttonLike) => {
   buttonLike.addEventListener("click", function () {
-    let likeSvg = buttonLike.querySelector(".cards__button-like-svg");
-    likeSvg.classList.toggle("cards__button-like-svg_active");
+    if (buttonLike.dataset["active"] == "no") {
+      buttonLike.src = "./images/cards/button-like-active.svg";
+      buttonLike.dataset["active"] = "yes";
+    } else {
+      buttonLike.src = "./images/cards/button-like.svg";
+      buttonLike.dataset["active"] = "no";
+    }
   });
 });
 

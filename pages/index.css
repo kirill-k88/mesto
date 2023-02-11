@@ -36,8 +36,6 @@
 @import url(../blocks/cards/__photo/cards__photo.css);
 @import url(../blocks/cards/__caption/cards__caption.css);
 @import url(../blocks/cards/__button-like/cards__button-like.css);
-@import url(../blocks/cards/__button-like-svg/cards___button-like-svg.css);
-@import url(../blocks/cards/__button-like-svg/_active/cards__button-like-svg_active.css);
 @import url(../blocks/cards/__card/cards__card.css);
 @import url(../blocks/cards/__title/cards__title.css);
 
