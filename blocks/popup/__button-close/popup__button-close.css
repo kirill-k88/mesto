@@ -1,16 +1,22 @@
 .popup__button-close {
-  position: relative;
-  top: calc(-100% - 40px);
-  right: calc(-100% - 8px);
+  position: absolute;
+  top: calc(((100vh - 330px) / 2) - 40px);
+  left: calc(((100vw - 430px) / 2) + 430px + 8px);
   width: 32px;
   height: 32px;
 }
 
 @media screen and (max-width: 600px) {
   .popup__button-close {
-    top: calc(-100% - 36px);
-    right: calc(-100% + 20px);
+    top: calc(((100vh - 322px) / 2) - 36px);
+    left: calc(((100vw - 282px) / 2) + 282px - 20px);
     width: 20px;
     height: 20px;
+  }
+}
+
+@media screen and (max-width: 319px) {
+  .popup__button-close {
+    left: calc(((320px - 282px) / 2) + 282px - 20px);
   }
 }

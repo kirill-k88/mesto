@@ -3,7 +3,8 @@
   align-items: flex-start;
   justify-content: space-between;
   width: calc(100% - 400px);
-  height: 73px;
+  /* height: 73px; */
+  padding-bottom: 41px;
   margin: 0 200px;
   border-bottom: 1px solid #545454;
 }
@@ -18,7 +19,8 @@
 @media screen and (max-width: 600px) {
   .header {
     width: 100%;
-    height: 56px;
+    /* height: 56px; */
+    padding-bottom: 31px;
     margin: 0;
   }
 }
