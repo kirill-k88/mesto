@@ -3,10 +3,9 @@
   align-items: flex-start;
   justify-content: space-between;
   width: calc(100% - 400px);
-  /* height: 73px; */
   padding-bottom: 41px;
   margin: 0 200px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
 @media screen and (max-width: 1079px) {
@@ -19,7 +18,6 @@
 @media screen and (max-width: 600px) {
   .header {
     width: 100%;
-    /* height: 56px; */
     padding-bottom: 31px;
     margin: 0;
   }
