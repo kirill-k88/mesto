@@ -15,6 +15,6 @@
   .profile__ocupation {
     font-size: 14px;
     line-height: 17px;
-    justify-self: center;
+    text-align: center;
   }
 }

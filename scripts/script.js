@@ -4,8 +4,10 @@ let buttonClose = document.querySelector(".popup__button-close");
 //Получить форму
 let formElement = document.querySelector(".popup__form");
 //Получить поля ввода
-let inputName = formElement.querySelector(".popup__input_name");
-let inputOcupation = formElement.querySelector(".popup__input_ocupation");
+let inputName = formElement.querySelector(".popup__input_contant_name");
+let inputOcupation = formElement.querySelector(
+  ".popup__input_contant_ocupation"
+);
 //Получить элемент попап
 let popup = document.querySelector(".popup");
 //Получить поле имя на странице

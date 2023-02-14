@@ -4,6 +4,12 @@
   left: calc(((100vw - 430px) / 2) + 430px + 8px);
   width: 32px;
   height: 32px;
+  border: none;
+  background-color: transparent;
+  background-image: url("../../../images/popup/popup-button-close.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 
 @media screen and (max-width: 600px) {
@@ -12,6 +18,7 @@
     left: calc(((100vw - 282px) / 2) + 282px - 20px);
     width: 20px;
     height: 20px;
+    background-size: 100%;
   }
 }
 
