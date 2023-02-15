@@ -6,12 +6,16 @@
   column-gap: 20px;
   align-items: baseline;
   margin-right: 10px;
+  margin-left: 30px;
+  max-width: calc(100% - 40px - 120px - 150px);
 }
 
 @media screen and (max-width: 1079px) {
   .profile__info {
     margin-top: 25px;
     margin-right: 0;
+    margin-left: 0;
+    max-width: 100%;
   }
 }
 

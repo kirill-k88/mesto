@@ -22,10 +22,10 @@
         <img class="profile__avatar" src="./images/profile/profile-avatar.jpg" alt="Аватар">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__button-edit common-link"></button>
+          <button class="profile__button-edit common-link" type="button"></button>
           <p class="profile__ocupation">Исследователь океана</p>
         </div>
-        <button class="profile__button-add common-link"></button>
+        <button class="profile__button-add common-link" type="button"></button>
       </section>
 
       <section class="cards">
@@ -34,42 +34,42 @@
             <img class="cards__photo" src="./images/cards/cards-karach.jpg" alt="Карачаевск">
             <div class="cards__caption">
               <h2 class="cards__title">Карачаевск</h2>
-              <button class="cards__button-like common-link cards__button-like_active"></button>
+              <button class="cards__button-like common-link cards__button-like_active" type="button"></button>
             </div>
           </li>
           <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
+            <img class="cards__photo" src="./images/cards/cards-brige.jpg" alt="Мост">
             <div class="cards__caption">
-              <h2 class="cards__title">Гора Эльбрус</h2>
-              <button class="cards__button-like common-link"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
-            <div class="cards__caption">
-              <h2 class="cards__title">Домбай</h2>
-              <button class="cards__button-like common-link"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
-            <div class="cards__caption">
-              <h2 class="cards__title">Гора Эльбрус</h2>
-              <button class="cards__button-like common-link"></button>
+              <h2 class="cards__title">Мост</h2>
+              <button class="cards__button-like common-link" type="button"></button>
             </div>
           </li>
           <li class="cards__card">
             <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
             <div class="cards__caption">
               <h2 class="cards__title">Домбай</h2>
-              <button class="cards__button-like common-link"></button>
+              <button class="cards__button-like common-link" type="button"></button>
+            </div>
+          </li>
+          <li class="cards__card">
+            <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
+            <div class="cards__caption">
+              <h2 class="cards__title">Гора Эльбрус</h2>
+              <button class="cards__button-like common-link" type="button"></button>
+            </div>
+          </li>
+          <li class="cards__card">
+            <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
+            <div class="cards__caption">
+              <h2 class="cards__title">Домбай</h2>
+              <button class="cards__button-like common-link" type="button"></button>
             </div>
           </li>
           <li class="cards__card">
             <img class="cards__photo" src="./images/cards/cards-karachaevo-cherkes.jpg" alt="Карачаево-Черкессия">
             <div class="cards__caption">
               <h2 class="cards__title">Карачаево-Черкессия</h2>
-              <button class="cards__button-like common-link"></button>
+              <button class="cards__button-like common-link" type="button"></button>
             </div>
           </li>
         </ul>
@@ -77,16 +77,16 @@
     </main>
 
     <div class="popup">
+      <button class="popup__button-close common-link" type="button"></button>
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="profile-form">
-          <input class="popup__input popup__input_contant_name" id="name" name="name-input" type="text"
+          <input class="popup__input popup__input_content_name" id="name" name="name-input" type="text"
             placeholder="Имя" required value="Жак-Ив Кусто">
-          <input class="popup__input popup__input_contant_ocupation" id="ocupation" name="ocupation-input" type="text"
+          <input class="popup__input popup__input_content_ocupation" id="ocupation" name="ocupation-input" type="text"
             placeholder="Должность" required value="Исследователь океана">
           <button class="popup__button-save common-link" type="submit">Сохранить</button>
         </form>
-        <button class="popup__button-close common-link"></button>
       </div>
     </div>
 

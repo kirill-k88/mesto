@@ -36,14 +36,9 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__field/popup__field.css);
 @import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__input/_contant/popup__input_contant_name.css);
-@import url(../blocks/popup/__input/_contant/popup__input_contant_ocupation.css);
+@import url(../blocks/popup/__input/_content/popup__input_content_name.css);
+@import url(../blocks/popup/__input/_content/popup__input_content_ocupation.css);
 @import url(../blocks/popup/__button-save/popup__button-save.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
-
-/* * {
-  outline: solid red;
-}
- */

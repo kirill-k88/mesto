@@ -1,19 +1,16 @@
 .cards {
   padding: 0;
   margin: 51px 200px 0;
-  width: calc(100% - 400px);
 }
 
 @media screen and (max-width: 1079px) {
   .cards {
-    width: calc(100% - 100px);
     margin: 51px 50px 0;
   }
 }
 
 @media screen and (max-width: 600px) {
   .cards {
-    width: calc(100% - 38px);
     margin: 36px 21px 0 17px;
   }
 }

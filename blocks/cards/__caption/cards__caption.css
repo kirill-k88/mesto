@@ -1,6 +1,7 @@
 .cards__caption {
   display: flex;
   flex-direction: row;
+  column-gap: 32px;
   justify-content: space-between;
   align-items: baseline;
   margin: 25px 15px 25px 21px;
