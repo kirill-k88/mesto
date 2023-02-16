@@ -18,6 +18,10 @@ let profileOcupation = document.querySelector(".profile__ocupation");
 //Переключить состояние видимости попапа
 function togglePopupVisability() {
   popup.classList.toggle("popup_opened");
+  //добавить в попап значения
+  inputName.value = profileName.textContent;
+  //добавить в попапзначения
+  inputOcupation.value = profileOcupation.textContent;
 }
 
 //Сохранить значения, глушим стандартный обработчик
