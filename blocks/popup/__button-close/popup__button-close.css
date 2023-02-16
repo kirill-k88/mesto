@@ -1,7 +1,7 @@
 .popup__button-close {
   position: absolute;
-  top: calc(((100% - 330px) / 2) - 40px);
-  left: calc(((100% - 430px) / 2) + 439px);
+  top: -40px;
+  right: -40px;
   width: 32px;
   height: 32px;
   border: none;
@@ -14,16 +14,9 @@
 
 @media screen and (max-width: 600px) {
   .popup__button-close {
-    top: calc(((100% - 322px) / 2) - 36px);
-    left: calc(100% - ((100% - 282px) / 2) - 20px);
+    top: -37px;
+    right: 0px;
     width: 20px;
     height: 20px;
-    background-size: 100%;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .popup__button-close {
-    left: 281px;
   }
 }

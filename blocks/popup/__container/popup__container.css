@@ -1,4 +1,5 @@
 .popup__container {
+  position: relative;
   padding: 34px 36px 37px;
   width: calc(430px - 36px * 2);
   background-color: #fff;
