@@ -1,5 +1,5 @@
 .cards__button-like {
-  width: 22px;
+  min-width: 22px;
   height: 19px;
   border: none;
   background-color: #fff;
@@ -7,7 +7,6 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-  margin-right: 5px;
 }
 
 .cards__button-like:hover {
