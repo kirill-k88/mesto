@@ -13,16 +13,7 @@ let profileName = document.querySelector(".profile__name");
 //Получить поле имя на странице
 let profileOcupation = document.querySelector(".profile__ocupation");
 
-//Переключить состояние видимости попапа
-/* function togglePopupVisability() {
-  popup.classList.toggle("popup_opened");
-  popup.classList.contains;
-  //добавить в попап значения
-  inputHeading.value = profileName.textContent;
-  //добавить в попапзначения
-  inputOption.value = profileOcupation.textContent;
-} */
-
+//Открыть попап редактирования профиля и загрузить данные
 function openPopupEdit() {
   popup.classList.add("popup_opened");
   //добавить в попап значения
@@ -31,6 +22,7 @@ function openPopupEdit() {
   inputOption.value = profileOcupation.textContent;
 }
 
+//Закрыть попап редактированяи профиля
 function closePopupEdit() {
   popup.classList.remove("popup_opened");
 }
