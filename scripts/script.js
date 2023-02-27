@@ -4,10 +4,8 @@ let buttonClose = document.querySelector(".popup__button-close");
 //Получить форму
 let formElement = document.querySelector(".popup__form");
 //Получить поля ввода
-let inputName = formElement.querySelector(".popup__input_content_name");
-let inputOcupation = formElement.querySelector(
-  ".popup__input_content_ocupation"
-);
+let inputHeading = formElement.querySelector(".popup__input_content_heading");
+let inputOption = formElement.querySelector(".popup__input_content_option");
 //Получить элемент попап
 let popup = document.querySelector(".popup");
 //Получить поле имя на странице
@@ -16,13 +14,25 @@ let profileName = document.querySelector(".profile__name");
 let profileOcupation = document.querySelector(".profile__ocupation");
 
 //Переключить состояние видимости попапа
-function togglePopupVisability() {
+/* function togglePopupVisability() {
   popup.classList.toggle("popup_opened");
   popup.classList.contains;
   //добавить в попап значения
-  inputName.value = profileName.textContent;
+  inputHeading.value = profileName.textContent;
   //добавить в попапзначения
-  inputOcupation.value = profileOcupation.textContent;
+  inputOption.value = profileOcupation.textContent;
+} */
+
+function openPopupEdit() {
+  popup.classList.add("popup_opened");
+  //добавить в попап значения
+  inputHeading.value = profileName.textContent;
+  //добавить в попапзначения
+  inputOption.value = profileOcupation.textContent;
+}
+
+function closePopupEdit() {
+  popup.classList.remove("popup_opened");
 }
 
 //Сохранить значения, глушим стандартный обработчик
@@ -30,21 +40,15 @@ function saveForm(evt) {
   //заглушить стандартное действие submit
   evt.preventDefault();
   //добавить на экран значения
-  profileName.textContent = inputName.value;
+  profileName.textContent = inputHeading.value;
   //добавить на экран значения
-  profileOcupation.textContent = inputOcupation.value;
+  profileOcupation.textContent = inputOption.value;
   //Закрыть попап
-  togglePopupVisability();
+  closePopupEdit();
 }
 
 //Добавить событие нажатия редактировать и закрыть
-buttonEdit.addEventListener("click", togglePopupVisability);
-buttonClose.addEventListener("click", togglePopupVisability);
+buttonEdit.addEventListener("click", openPopupEdit);
+buttonClose.addEventListener("click", closePopupEdit);
 //Нажатие на кнопку сохранить
 formElement.addEventListener("submit", saveForm);
-//Нажатие на кнопку Enter
-formElement.addEventListener("keydown", function () {
-  if (event.key == "Enter") {
-    saveForm(event);
-  }
-});
