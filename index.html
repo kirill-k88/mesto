@@ -31,66 +31,55 @@
 
       <section class="cards">
         <ul class="cards__list">
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-karach.jpg" alt="Карачаевск">
-            <div class="cards__caption">
-              <h2 class="cards__title">Карачаевск</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-brige.jpg" alt="Мост">
-            <div class="cards__caption">
-              <h2 class="cards__title">Мост</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
-            <div class="cards__caption">
-              <h2 class="cards__title">Домбай</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-elbrus.jpg" alt="Эльбрус">
-            <div class="cards__caption">
-              <h2 class="cards__title">Гора Эльбрус</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-dombay.jpg" alt="Домбай">
-            <div class="cards__caption">
-              <h2 class="cards__title">Домбай</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
-          <li class="cards__card">
-            <img class="cards__photo" src="./images/cards/cards-karachaevo-cherkes.jpg" alt="Карачаево-Черкессия">
-            <div class="cards__caption">
-              <h2 class="cards__title">Карачаево-Черкессия</h2>
-              <button class="cards__button-like common-link" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
 
     <div class="popup">
-
       <div class="popup__container">
         <button class="popup__button-close common-link" type="button"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="profile-form">
-          <input class="popup__input popup__input_content_heading" id="name" name="name-input" type="text"
-            placeholder="Имя" required value="">
-          <input class="popup__input popup__input_content_option" id="ocupation" name="ocupation-input" type="text"
-            placeholder="Должность" required value="">
-          <button class="popup__button-save common-link" type="submit">Сохранить</button>
-        </form>
       </div>
     </div>
+
+    <template id="Card">
+      <li class="cards__card">
+        <button class="cards__button-remove common-link" type="button"></button>
+        <img class="cards__photo">
+        <div class="cards__caption">
+          <h2 class="cards__title"></h2>
+          <button class="cards__button-like common-link" type="button"></button>
+        </div>
+      </li>
+    </template>
+
+    <template id="editPopup">
+      <form class="popup__form" name="profile-form">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__input popup__input_content_heading" id="profileName" name="profileName-input" type="text"
+          placeholder="Имя" required value="">
+        <input class="popup__input popup__input_content_option" id="ocupation" name="ocupation-input" type="text"
+          placeholder="Должность" required value="">
+        <button class="popup__button-save common-link" type="submit">Сохранить</button>
+      </form>
+    </template>
+
+    <template id="addCardPopup">
+      <form class="popup__form" name="cardAdd-form">
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__input popup__input_content_heading" id="cardName" name="cardName-input" type="text"
+          placeholder="Наименование" required value="">
+        <input class="popup__input popup__input_content_option" id="cardUrl" name="cardUrl-input" type="text"
+          placeholder="URL" required value="">
+        <button class="popup__button-save common-link" type="submit">Создать</button>
+      </form>
+    </template>
+
+    <template id="imagePopup">
+      <figure class="popup__figure">
+        <img class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+    </template>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>

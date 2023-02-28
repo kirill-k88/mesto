@@ -2,8 +2,8 @@
   min-width: 22px;
   height: 19px;
   border: none;
-  background-color: #fff;
-  background-image: url("../../../images/cards/button-like.svg");
+  background-color: transparent;
+  background-image: url('../../../images/cards/button-like.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;

@@ -4,8 +4,8 @@
   margin-left: auto;
   border: 2px solid #fff;
   border-radius: 2px;
-  background-color: #000;
-  background-image: url("../../../images/profile/profile-button-add.svg");
+  background-color: transparent;
+  background-image: url('../../../images/profile/profile-button-add.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px;
