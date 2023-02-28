@@ -85,6 +85,8 @@ function addCard(heading, url, alt) {
 
 //Ф-я открытия попапа редактирования профиля и наполнения его данынми
 function openPopupEdit() {
+  //Очистить попап
+  removePopupContent();
   //Получить элемент формы из шаблона
   const editFormElement = editPopupTemplate
     .querySelector('.popup__form')
@@ -99,7 +101,7 @@ function openPopupEdit() {
   //Добавить форму в контейнер попапа
   popupContainer.append(editFormElement);
   //Показать попап
-  popup.classList.add('popup_opened');
+  showPopup();
 }
 
 //Ф-я сохранения значения, глушим стандартный обработчик
@@ -121,6 +123,8 @@ function saveForm(evt) {
 }
 
 function openImagePopup(evt) {
+  //Очистить попап
+  removePopupContent();
   //Получить родительский элемент карточку
   const card = evt.target.closest('.cards__card');
   //Получить данные карточки
@@ -135,12 +139,14 @@ function openImagePopup(evt) {
   imageFigureElement.querySelector('.popup__image').src = url;
   imageFigureElement.querySelector('.popup__image').alt = alt;
   imageFigureElement.querySelector('.popup__caption').textContent = caption;
+  //Добавить класс-модификатор для контейнера
+  popupContainer.classList.add('popup__container_isImage');
   //Добавить класс-модификатор для попапа
-  popupContainer.classList.add('popup__container_image');
+  popup.classList.add('popup_isImage');
   //Добавить форму в контейнер попапа
   popupContainer.append(imageFigureElement);
   //Показать попап
-  popup.classList.add('popup_opened');
+  showPopup();
 }
 
 //Ф-я создания карточки по данным из попапа
@@ -165,12 +171,13 @@ function removeCard(evt) {
 
 //Ф-я снятия установки лайка
 function toggleLike(evt) {
-  console.log('like');
   evt.target.classList.toggle('cards__button-like_active');
 }
 
 //Ф-я открытия попапа добавления карточки и наполнения его данными
 function openPopupAddCard() {
+  //Очистить попап
+  removePopupContent();
   //Получить элемент формы из шаблона
   const addCardFormElement = addCardPopupTemplate
     .querySelector('.popup__form')
@@ -180,19 +187,35 @@ function openPopupAddCard() {
   //Добавить форму в контейнер попапа
   popupContainer.append(addCardFormElement);
   //Показать попап
+  showPopup();
+}
+
+//Ф-я визуализации попапа
+function showPopup() {
+  //Показать попап
   popup.classList.add('popup_opened');
 }
 
 //Ф-я закрытия попапа
 function closePopupEdit() {
   popup.classList.remove('popup_opened');
+}
+
+//Ф-я удаления содержимого попапа
+function removePopupContent() {
   //Удалить содержимое попап-контейнера
-  if (popupContainer.classList.contains('popup__container_image')) {
-    popupContainer.querySelector('.popup__figure').remove();
+  if (popup.classList.contains('popup_isImage')) {
+    if (popupContainer.querySelector('.popup__figure') !== null) {
+      popupContainer.querySelector('.popup__figure').remove();
+    }
+    //Удалить класс-модификатор для контейнера
+    popupContainer.classList.remove('popup__container_isImage');
     //Удалить класс-модификатор для попапа
-    popupContainer.classList.remove('popup__container_image');
+    popup.classList.remove('popup_isImage');
   } else {
-    popupContainer.querySelector('.popup__form').remove();
+    if (popupContainer.querySelector('.popup__form') !== null) {
+      popupContainer.querySelector('.popup__form').remove();
+    }
   }
 }
 
