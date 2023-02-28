@@ -71,7 +71,7 @@ function addCard(heading, url, alt) {
   cardElement
     .querySelector('.cards__button-remove')
     .addEventListener('click', removeCard);
-  //Добавить обработчик событий на кнопку лакйка
+  //Добавить обработчик событий на кнопку лайка
   cardElement
     .querySelector('.cards__button-like')
     .addEventListener('click', toggleLike);
@@ -155,7 +155,7 @@ function createCard(evt) {
   evt.preventDefault();
   //Получить родительский элемент форму
   const form = evt.target.closest('.popup__form');
-  //получить значения полей
+  //Получить значения полей
   const heading = form.querySelector('.popup__input_content_heading').value;
   const url = form.querySelector('.popup__input_content_option').value;
   //Добавить новую карточку в список
@@ -192,7 +192,6 @@ function openPopupAddCard() {
 
 //Ф-я визуализации попапа
 function showPopup() {
-  //Показать попап
   popup.classList.add('popup_opened');
 }
 
@@ -219,7 +218,7 @@ function removePopupContent() {
   }
 }
 
-//Добавить событие нажатия редактировать и закрыть
+//Добавить событие нажатия редактировать
 buttonEdit.addEventListener('click', openPopupEdit);
 //Добавить событие нажатия добавить карточку
 buttonAddCard.addEventListener('click', openPopupAddCard);
