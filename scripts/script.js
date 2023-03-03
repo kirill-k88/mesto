@@ -70,7 +70,7 @@ const cardTemplate = document.querySelector('#Card').content;
 
 //Добавить карточки из перечня по-умолчанию
 initialCards.forEach((item) => {
-  addCard(item.name, item.link, item.name);
+  addCard(item.name, item.link);
 });
 
 //Функция добавления карточки
