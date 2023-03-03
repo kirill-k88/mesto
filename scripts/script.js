@@ -53,7 +53,7 @@ const popupProfileOption = popupProfile.querySelector(
 const popupProfileForm = document.forms['profile-form'];
 
 //Кнопки закрытия попапов
-const popupCloseButton = document.querySelectorAll('.popup__button-close');
+const popupCloseButtons = document.querySelectorAll('.popup__button-close');
 
 //Получить элемент попап изображения
 const popupImage = document.querySelector('.popup_type_image');
@@ -127,6 +127,8 @@ function showImagePopup(heading, url) {
 
 //Ф-я открытия попапа добавления карточки и наполнения его данными
 function showPopupAddCard() {
+  //Очистить поля ввода формы
+  popupAddCardForm.reset();
   //Показать попап
   showPopup(popupAddCard);
 }
@@ -140,7 +142,7 @@ function handleProfileFormSubmit(evt) {
   //добавить на экран значения
   profileOcupation.textContent = popupProfileOption.value;
   //Закрыть попап
-  closePopup(evt);
+  hideClosestPopup(evt);
 }
 
 //Ф-я создания карточки по данным из попапа
@@ -151,8 +153,6 @@ function handleAddCardFormSubmit(evt) {
   addCard(popupAddCardHeading.value, popupAddCardOption.value);
   //Закрыть попап
   hideClosestPopup(evt);
-  //Очистить поля ввода формы
-  evt.target.reset();
 }
 
 //Ф-я удаления карточки
@@ -186,8 +186,8 @@ buttonEdit.addEventListener('click', showPopupProfile);
 buttonAddCard.addEventListener('click', showPopupAddCard);
 
 //Нажатие на кнопку закрыть попапа
-popupCloseButton.forEach((CloseButton) => {
-  CloseButton.addEventListener('click', hideClosestPopup);
+popupCloseButtons.forEach((closeButton) => {
+  closeButton.addEventListener('click', hideClosestPopup);
 });
 
 //Добавить обработчики событий кнопоки сохранить (submit)
