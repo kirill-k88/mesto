@@ -40,11 +40,17 @@
         <button class="popup__button-close common-link" type="button"></button>
         <form class="popup__form" name="profile-form">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__input popup__input_content_heading" name="profileName-input" type="text"
-            placeholder="Имя" required value="">
-          <input class="popup__input popup__input_content_option" name="ocupation-input" type="text"
-            placeholder="Должность" required value="">
-          <button class="popup__button-save common-link" type="submit">Сохранить</button>
+          <div class="popup__input-container">
+            <input class="popup__input popup__input_content_heading" name="profileNameInput" type="text"
+              placeholder="Имя" required minlength="2" maxlength="40">
+            <span class="popup__input-error profileNameInput-error">sdfsdfgdsdfgefgfdsf</span>
+          </div>
+          <div class="popup__input-container">
+            <input class="popup__input popup__input_invalid popup__input_content_option" name="ocupationInput"
+              type="text" placeholder="О себе" required minlength="2" maxlength="200">
+            <span class="popup__input-error popup__input-error_active ocupationInput-error">tytrewertyhjkiloiuyt</span>
+          </div>
+          <button class="popup__button-submit common-link" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
@@ -54,11 +60,13 @@
         <button class="popup__button-close common-link" type="button"></button>
         <form class="popup__form" name="cardAdd-form">
           <h2 class="popup__title">Новое место</h2>
-          <input class="popup__input popup__input_content_heading" name="cardName-input" type="text"
-            placeholder="Наименование" required value="">
-          <input class="popup__input popup__input_content_option" name="cardUrl-input" type="text" placeholder="URL"
-            required value="">
-          <button class="popup__button-save common-link" type="submit">Создать</button>
+          <input class="popup__input popup__input_content_heading" name="cardNameInput" type="text"
+            placeholder="Название" required minlength="2" maxlength="30">
+          <span class="popup__input-error cardNameInput-error"></span>
+          <input class="popup__input popup__input_content_option" name="cardUrlInput" type="text"
+            placeholder="Ссылка на картинку" required type="url">
+          <span class="popup__input-error cardUrlInput-error"></span>
+          <button class="popup__button-submit popup__button-submit_inactive common-link" type="submit">Создать</button>
         </form>
       </div>
     </div>

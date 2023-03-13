@@ -34,23 +34,15 @@ const cardsList = document.querySelector('.cards__list');
 
 //Получить элементы попапа добавления
 const popupAddCard = document.querySelector('.popup_type_add');
-const popupAddCardHeading = popupAddCard.querySelector(
-  '.popup__input_content_heading'
-);
-const popupAddCardOption = popupAddCard.querySelector(
-  '.popup__input_content_option'
-);
 const popupAddCardForm = document.forms['cardAdd-form'];
+const popupAddCardHeading = popupAddCardForm.elements.cardNameInput;
+const popupAddCardOption = popupAddCardForm.elements.cardUrlInput;
 
 //Получить элементы попапа редактирования профиля
 const popupProfile = document.querySelector('.popup_type_edit');
-const popupProfileHeading = popupProfile.querySelector(
-  '.popup__input_content_heading'
-);
-const popupProfileOption = popupProfile.querySelector(
-  '.popup__input_content_option'
-);
 const popupProfileForm = document.forms['profile-form'];
+const popupProfileHeading = popupProfileForm.elements.profileNameInput;
+const popupProfileOption = popupProfileForm.elements.ocupationInput;
 
 //Кнопки закрытия попапов
 const popupCloseButtons = document.querySelectorAll('.popup__button-close');
