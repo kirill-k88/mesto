@@ -1,9 +1,0 @@
-.popup__input_content_heading {
-  margin-top: 48px;
-}
-
-@media screen and (max-width: 600px) {
-  .popopup__input_content_heading {
-    margin-top: 75px;
-  }
-}

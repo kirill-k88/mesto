@@ -1,8 +1,3 @@
-/* //Подключить скрипт validate.js
-const script = document.createElement('script');
-script.src = './scripts/validate.js';
-document.body.appendChild(script); */
-
 //Карточки по-умолчанию
 const initialCards = [
   {
@@ -73,25 +68,6 @@ initialCards.forEach((item) => {
   addCard(item.name, item.link);
 });
 
-//Подключить валидацию форм
-import {
-  enableValidation,
-  hideInputErors,
-  сheckValidationForm,
-} from './validate.js';
-
-//Набор селекторов и классов для валидации
-const selectorsCollection = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup__button-submit_inactive',
-  inputErrorClass: 'popup__input_invalid',
-  errorClass: 'popup__input-error_active',
-};
-//включить валидацию
-enableValidation(selectorsCollection);
-
 //Функция добавления карточки
 function addCard(heading, url) {
   const card = makeCardFromTemplate(heading, url, heading);
@@ -125,15 +101,24 @@ function makeCardFromTemplate(heading, url, alt) {
   return cardElement;
 }
 
+//Подключить валидацию форм
+import {
+  selectorsCollectionObj,
+  hideInputErors,
+  checkValidationForm,
+} from './validate.js';
+
 //Ф-я открытия попапа редактирования профиля и наполнения его данынми
 function showPopupProfile() {
   //Наполнить контентом элементы формы
   popupProfileHeading.value = profileName.textContent;
   popupProfileOption.value = profileOcupation.textContent;
   //проверить валидность формы
-  сheckValidationForm(popupProfileForm, selectorsCollection);
+  checkValidationForm(popupProfileForm, selectorsCollectionObj);
   //скрыть сообщения о невалидности
-  hideInputErors(popupProfileForm, selectorsCollection);
+  hideInputErors(popupProfileForm, selectorsCollectionObj);
+  //Добавить листнер попапа
+  addListenerClosePopup(popupProfile);
   //Показать попап
   showPopup(popupProfile);
 }
@@ -144,6 +129,8 @@ function showImagePopup(heading, url) {
   popupImageFigureImg.src = url;
   popupImageFigureImg.alt = heading;
   popupImageFigureCaption.textContent = heading;
+  //Добавить листнер попапа
+  addListenerClosePopup(popupImage);
   //Показать попап
   showPopup(popupImage);
 }
@@ -153,9 +140,11 @@ function showPopupAddCard() {
   //Очистить поля ввода формы
   popupAddCardForm.reset();
   //проверить валидность формы
-  сheckValidationForm(popupAddCardForm, selectorsCollection);
+  checkValidationForm(popupAddCardForm, selectorsCollectionObj);
   //скрыть сообщения о невалидности
-  hideInputErors(popupAddCardForm, selectorsCollection);
+  hideInputErors(popupAddCardForm, selectorsCollectionObj);
+  //Добавить листнер попапа
+  addListenerClosePopup(popupAddCard);
   //Показать попап
   showPopup(popupAddCard);
 }
@@ -213,7 +202,10 @@ function handlerWindowKeydown(evt) {
 
 //Ф-я закрытия попапа
 function hideClosestPopup(evt) {
-  hidePopup(evt.target.closest('.popup'));
+  const popup = evt.target.closest('.popup');
+  hidePopup(popup);
+  //удаление листнера попапа
+  removeListenerClosePopup(popup);
 }
 
 //Ф-я скрытия попапа
@@ -236,10 +228,18 @@ popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 //Добавить обработчики событий кнопоки создать (submit)
 popupAddCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
-//Добавить обработчик события нажатия на фон для всех поппапов
-Array.from(popupList).forEach((popup) => {
+//Добавить обработчик событий попапа и клавиши Esc
+function addListenerClosePopup(popup) {
+  //Добавить обработчик события нажатия на фон для всех поппапов
   popup.addEventListener('click', handlerPopupBackgroundClick);
-});
+  //Добавить обработчик на нажатие клавиши Esc
+  window.addEventListener('keydown', handlerWindowKeydown);
+}
 
-//Добавить обработчик на нажатие клавиши Esc
-window.addEventListener('keydown', handlerWindowKeydown);
+//Удалить обработчик событий попапа и клавиши Esc
+function removeListenerClosePopup(popup) {
+  //Добавить обработчик события нажатия на фон для всех поппапов
+  popup.removeEventListener('click', handlerPopupBackgroundClick);
+  //Добавить обработчик на нажатие клавиши Esc
+  window.removeEventListener('keydown', handlerWindowKeydown);
+}

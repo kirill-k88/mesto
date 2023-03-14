@@ -1,14 +1,14 @@
-//Библиотека ф-й валидации форм
-/*Получить селекторы и классы для валидации форм
-Ключи объекта:
-formSelector: '.popup__form',
-inputSelector: '.popup__input',
-submitButtonSelector: '.popup__button-submit',
-inactiveButtonClass: 'popup__button-submit_inactive',
-inputErrorClass: 'popup__input_invalid',
-errorClass: 'popup__input-error_active'
-*/
-export function enableValidation(selectorsCollection) {
+//Набор селекторов и классов для валидации
+export const selectorsCollectionObj = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-submit',
+  inactiveButtonClass: 'popup__button-submit_inactive',
+  inputErrorClass: 'popup__input_invalid',
+  errorClass: 'popup__input-error_active',
+};
+
+function enableValidation(selectorsCollection) {
   const formsList = document.querySelectorAll(selectorsCollection.formSelector);
   //Добавить обработчики событий ввода на все инпуты всех форм для их валидации
   Array.from(formsList).forEach((form) => {
@@ -20,13 +20,9 @@ export function enableValidation(selectorsCollection) {
     });
     //Добавить обработчик события input формы для ее валидации
     form.addEventListener('input', () => {
-      сheckValidationForm(form, selectorsCollection);
+      checkValidationForm(form, selectorsCollection);
     });
   });
-
-  /*   popupProfileForm.addEventListener('input', () => {
-    сheckValidationForm(popupProfileForm, selectorsCollection);
-  }); */
 }
 
 //Ф-я блокировки кнопки submit
@@ -88,7 +84,7 @@ export function hideInputErors(form, selectorsCollection) {
 }
 
 //Ф-я проверки валидности формы
-export function сheckValidationForm(form, selectorsCollection) {
+export function checkValidationForm(form, selectorsCollection) {
   if (!form.checkValidity()) {
     //блокировать кнопку Submit
     disableSubmitButton(form, selectorsCollection);
@@ -97,3 +93,6 @@ export function сheckValidationForm(form, selectorsCollection) {
     enableSubmitButton(form, selectorsCollection);
   }
 }
+
+//Включить валиацию форм
+enableValidation(selectorsCollectionObj);
