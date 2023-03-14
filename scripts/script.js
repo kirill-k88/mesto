@@ -1,3 +1,8 @@
+/* //Подключить скрипт validate.js
+const script = document.createElement('script');
+script.src = './scripts/validate.js';
+document.body.appendChild(script); */
+
 //Карточки по-умолчанию
 const initialCards = [
   {
@@ -32,6 +37,9 @@ const buttonAddCard = document.querySelector('.profile__button-add');
 //Получить список карточек
 const cardsList = document.querySelector('.cards__list');
 
+//Получить список попапов
+const popupList = document.querySelectorAll('.popup');
+
 //Получить элементы попапа добавления
 const popupAddCard = document.querySelector('.popup_type_add');
 const popupAddCardForm = document.forms['cardAdd-form'];
@@ -64,6 +72,25 @@ const cardTemplate = document.querySelector('#Card').content;
 initialCards.forEach((item) => {
   addCard(item.name, item.link);
 });
+
+//Подключить валидацию форм
+import {
+  enableValidation,
+  hideInputErors,
+  сheckValidationForm,
+} from './validate.js';
+
+//Набор селекторов и классов для валидации
+const selectorsCollection = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-submit',
+  inactiveButtonClass: 'popup__button-submit_inactive',
+  inputErrorClass: 'popup__input_invalid',
+  errorClass: 'popup__input-error_active',
+};
+//включить валидацию
+enableValidation(selectorsCollection);
 
 //Функция добавления карточки
 function addCard(heading, url) {
@@ -104,9 +131,9 @@ function showPopupProfile() {
   popupProfileHeading.value = profileName.textContent;
   popupProfileOption.value = profileOcupation.textContent;
   //проверить валидность формы
-  сheckValidationForm(popupProfileForm);
+  сheckValidationForm(popupProfileForm, selectorsCollection);
   //скрыть сообщения о невалидности
-  hideInputErors(popupProfileForm);
+  hideInputErors(popupProfileForm, selectorsCollection);
   //Показать попап
   showPopup(popupProfile);
 }
@@ -126,9 +153,9 @@ function showPopupAddCard() {
   //Очистить поля ввода формы
   popupAddCardForm.reset();
   //проверить валидность формы
-  сheckValidationForm(popupAddCardForm);
+  сheckValidationForm(popupAddCardForm, selectorsCollection);
   //скрыть сообщения о невалидности
-  hideInputErors(popupAddCardForm);
+  hideInputErors(popupAddCardForm, selectorsCollection);
   //Показать попап
   showPopup(popupAddCard);
 }
@@ -155,17 +182,6 @@ function handleAddCardFormSubmit(evt) {
   hideClosestPopup(evt);
 }
 
-//Ф-я проверки валидности ввода
-function handleCheckValidationInput(form, element) {
-  //если инпут невалиден показать спан
-  if (!element.validity.valid) {
-    showErrorMsg(form, element);
-  } else {
-    //скрыть спан
-    hideErrorMsg(form, element);
-  }
-}
-
 //Ф-я удаления карточки
 function removeCard(evt) {
   evt.target.closest('.cards__card').remove();
@@ -181,6 +197,20 @@ function showPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
+//Ф-я закрытия попапа по клику на фон
+function handlerPopupBackgroundClick(evt) {
+  hidePopup(evt.target);
+}
+
+//Ф-я закрытия попапа по кнопке Esc
+function handlerWindowKeydown(evt) {
+  if (evt.key === 'Escape') {
+    Array.from(popupList).forEach((popup) => {
+      hidePopup(popup);
+    });
+  }
+}
+
 //Ф-я закрытия попапа
 function hideClosestPopup(evt) {
   hidePopup(evt.target.closest('.popup'));
@@ -189,65 +219,6 @@ function hideClosestPopup(evt) {
 //Ф-я скрытия попапа
 function hidePopup(popup) {
   popup.classList.remove('popup_opened');
-}
-
-//Ф-я проверки валидности формы
-function сheckValidationForm(form) {
-  if (!form.checkValidity()) {
-    //блокировать кнопку Submit
-    disableSubmitButton(form);
-  } else {
-    //разблокировать кнопку Submit
-    enableSubmitButton(form);
-  }
-}
-
-//Ф-я блокировки кнопки submit
-function disableSubmitButton(form) {
-  const button = form.querySelector('.popup__button-submit');
-  button.disabled = true;
-  //добавить класс неактивной кнопки
-  button.classList.add('popup__button-submit_inactive');
-}
-
-//Ф-я разблокировки кнопки submit
-function enableSubmitButton(form) {
-  const button = form.querySelector('.popup__button-submit');
-  button.disabled = false;
-  //добавить класс неактивной кнопки
-  button.classList.remove('popup__button-submit_inactive');
-}
-
-//Показать строку с ошибкой
-function showErrorMsg(form, element) {
-  //получить спан для отображения ошибки
-  const inputError = form.querySelector(`.${element.name}-error`);
-  //получить текст ошибку
-  inputError.textContent = element.validationMessage;
-  //добавить класс для отображения
-  inputError.classList.add('popup__input-error_active');
-  //добавить класс для инпута
-  element.classList.add('popup__input_invalid');
-}
-
-//Скрыть строку с ошибкой
-function hideErrorMsg(form, element) {
-  //получить спан для отображения ошибки
-  const inputError = form.querySelector(`.${element.name}-error`);
-  inputError.textContent = '';
-  //убрать класс для отображения
-  inputError.classList.remove('popup__input-error_active');
-  //убрать класс для инпута
-  element.classList.remove('popup__input_invalid');
-}
-
-//Ф-я перебора всех инпутов и скрытия их ошибок
-function hideInputErors(form) {
-  Array.from(form.elements).forEach((element) => {
-    if (element.nodeName === 'INPUT') {
-      hideErrorMsg(form, element);
-    }
-  });
 }
 
 //Добавить событие нажатия редактировать
@@ -265,21 +236,10 @@ popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 //Добавить обработчики событий кнопоки создать (submit)
 popupAddCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
-//Добавить обработчик события input формы для ее валидации
-popupAddCardForm.addEventListener('input', () => {
-  сheckValidationForm(popupAddCardForm);
-});
-popupProfileForm.addEventListener('input', () => {
-  сheckValidationForm(popupProfileForm);
+//Добавить обработчик события нажатия на фон для всех поппапов
+Array.from(popupList).forEach((popup) => {
+  popup.addEventListener('click', handlerPopupBackgroundClick);
 });
 
-//Добавить обработчики событий ввода на все инпуты всех форм для их валидации
-Array.from(document.forms).forEach((form) => {
-  Array.from(form.elements).forEach((element) => {
-    if (element.nodeName === 'INPUT') {
-      element.addEventListener('input', () => {
-        handleCheckValidationInput(form, element);
-      });
-    }
-  });
-});
+//Добавить обработчик на нажатие клавиши Esc
+window.addEventListener('keydown', handlerWindowKeydown);
