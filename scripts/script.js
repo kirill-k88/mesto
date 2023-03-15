@@ -186,6 +186,13 @@ function handlerWindowKeydown(evt) {
   }
 }
 
+//Ф-я закрытия попапа по клику по фону
+function handlerHidePopupBackgroundClick(evt, popup) {
+  if (evt.target === popup) {
+    hidePopup(popup);
+  }
+}
+
 //Ф-я скрытия попапа
 function hidePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -209,8 +216,8 @@ Array.from(popupCloseButtons).forEach((closeButton) => {
 //Нажатие на фон попапа приводт к закрытию
 Array.from(popupList).forEach((popup) => {
   //Добавить обработчик события нажатия на фон для всех поппапов
-  popup.addEventListener('click', () => {
-    hidePopup(popup);
+  popup.addEventListener('click', (evt) => {
+    handlerHidePopupBackgroundClick(evt, popup);
   });
 });
 
