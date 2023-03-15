@@ -13,29 +13,25 @@ function enableValidation(selectorsCollection) {
   //Добавить обработчики событий ввода на все инпуты всех форм для их валидации
   Array.from(formsList).forEach((form) => {
     const inputsList = form.querySelectorAll(selectorsCollection.inputSelector);
+    const button = form.querySelector(selectorsCollection.submitButtonSelector);
     Array.from(inputsList).forEach((element) => {
       element.addEventListener('input', () => {
         handleCheckValidationInput(form, element, selectorsCollection);
+        checkValidationForm(form, button, selectorsCollection);
       });
-    });
-    //Добавить обработчик события input формы для ее валидации
-    form.addEventListener('input', () => {
-      checkValidationForm(form, selectorsCollection);
     });
   });
 }
 
 //Ф-я блокировки кнопки submit
-function disableSubmitButton(form, selectorsCollection) {
-  const button = form.querySelector(selectorsCollection.submitButtonSelector);
+function disableSubmitButton(form, button, selectorsCollection) {
   button.disabled = true;
   //добавить класс неактивной кнопки
   button.classList.add(selectorsCollection.inactiveButtonClass);
 }
 
 //Ф-я разблокировки кнопки submit
-function enableSubmitButton(form, selectorsCollection) {
-  const button = form.querySelector(selectorsCollection.submitButtonSelector);
+function enableSubmitButton(form, button, selectorsCollection) {
   button.disabled = false;
   //добавить класс неактивной кнопки
   button.classList.remove(selectorsCollection.inactiveButtonClass);
@@ -84,13 +80,13 @@ export function hideInputErors(form, selectorsCollection) {
 }
 
 //Ф-я проверки валидности формы
-export function checkValidationForm(form, selectorsCollection) {
+export function checkValidationForm(form, button, selectorsCollection) {
   if (!form.checkValidity()) {
     //блокировать кнопку Submit
-    disableSubmitButton(form, selectorsCollection);
+    disableSubmitButton(form, button, selectorsCollection);
   } else {
     //разблокировать кнопку Submit
-    enableSubmitButton(form, selectorsCollection);
+    enableSubmitButton(form, button, selectorsCollection);
   }
 }
 
