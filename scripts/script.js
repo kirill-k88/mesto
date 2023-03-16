@@ -173,7 +173,7 @@ function toggleLike(evt) {
 function showPopup(popup) {
   popup.classList.add('popup_opened');
   //Добавить листнер попапа
-  addListenerClosePopup(popup);
+  addListenerClosePopup();
 }
 
 //Ф-я закрытия попапа по кнопке Esc
@@ -227,7 +227,7 @@ popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 popupAddCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
 //Добавить обработчик событий попапа и клавиши Esc
-function addListenerClosePopup(popup) {
+function addListenerClosePopup() {
   //Добавить обработчик на нажатие клавиши Esc
   window.addEventListener('keydown', handlerWindowKeydown);
 }
