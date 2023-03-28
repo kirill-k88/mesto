@@ -26,37 +26,50 @@ export class Card {
   }
 
   //Ф-я установки листнеров карточки
-  _setListeners(cardElement, cardPicture) {
+  _setListeners() {
     //Добавить обработчик событий на кнопку удаления
-    cardElement
+    this._cardElement
       .querySelector(this._buttonRemoveSelector)
       .addEventListener('click', this._removeCard.bind(this));
     //Добавить обработчик событий на кнопку лайка
-    cardElement
+    this._cardElement
       .querySelector(this._buttonLikeSelector)
       .addEventListener('click', this._toggleLike.bind(this));
     //Добавить обработчик событий на изображение
-    cardPicture.addEventListener('click', () => {
+    this._cardPicture.addEventListener('click', () => {
       this._showCardPopup(this._cardObj);
     });
   }
 
-  getCard() {
+  _getCardElement() {
     //Получить содержимое шаблона карточки
     const cardTemplateContent = document.querySelector(this._template).content;
     //Получить элемент катрочки из шаблона
     const cardElement = cardTemplateContent
       .querySelector(this._elementSelector)
       .cloneNode(true);
-    //Наполнить контентом элемент карточки
-    const cardPicture = cardElement.querySelector(this._pictureSelector);
-    cardPicture.src = this._cardObj.link;
-    cardPicture.alt = this._cardObj.name;
-    cardElement.querySelector(this._titleSelector).textContent =
-      this._cardObj.name;
-    //установить слушателей событий карточки
-    this._setListeners(cardElement, cardPicture);
 
     return cardElement;
+  }
+
+  _getCardImg() {
+    const cardPicture = this._cardElement.querySelector(this._pictureSelector);
+    return cardPicture;
+  }
+
+  getCard() {
+    //получить карточку
+    this._cardElement = this._getCardElement();
+    //Наполнить контентом элемент карточки
+    this._cardPicture = this._getCardImg();
+
+    this._cardPicture.src = this._cardObj.link;
+    this._cardPicture.alt = this._cardObj.name;
+    this._cardElement.querySelector(this._titleSelector).textContent =
+      this._cardObj.name;
+    //установить слушателей событий карточки
+    this._setListeners();
+
+    return this._cardElement;
   }
 }
