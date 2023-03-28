@@ -38,73 +38,45 @@ const profileName = document.querySelector('.profile__name');
 //Получить поле имя на странице
 const profileOcupation = document.querySelector('.profile__ocupation');
 
-//Получить содержимое шаблона карточки
-const cardTemplate = document.querySelector('#Card').content;
-
-//Добавить карточки из перечня по-умолчанию
-initialCards.forEach((cardObj) => {
-  addCard(cardObj);
-});
+//Объект конфигурация с набором классов и селекторов шаблона карточки
+const cardSelectorCollection = {
+  template: '#Card',
+  elementSelector: '.cards__card',
+  pictureSelector: '.cards__photo',
+  titleSelector: '.cards__title',
+  buttonRemoveSelector: '.cards__button-remove',
+  buttonLikeSelector: '.cards__button-like',
+  buttonLikeActiveClass: 'cards__button-like_active',
+};
 
 //Подключить набор карточек
 import { initialCards } from './cards.js';
+//Подключить класс карточки
+import { Card } from './Card.js';
 
-//Функция добавления карточки
-function addCard(cardObj) {
-  const card = makeCardFromTemplate(cardObj);
-  //Добавить карточку в список
-  cardsContainer.prepend(card);
-}
+//Набор селекторов и классов для валидации
+const formSelectorCollection = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-submit',
+  inactiveButtonClass: 'popup__button-submit_inactive',
+  inputErrorClass: 'popup__input_invalid',
+  errorClass: 'popup__input-error_active',
+};
 
-//Ф-я получения карточки из шаблона
-function makeCardFromTemplate(cardObj) {
-  //Получить элемент катрочки из шаблона
-  const cardElement = cardTemplate
-    .querySelector('.cards__card')
-    .cloneNode(true);
-  //Наполнить контентом элемент карточки
-  const cardPhoto = cardElement.querySelector('.cards__photo');
-  cardPhoto.src = cardObj.link;
-  cardPhoto.alt = cardObj.name;
-  cardElement.querySelector('.cards__title').textContent = cardObj.name;
-  //Добавить обработчик событий на кнопку удаления
-  cardElement
-    .querySelector('.cards__button-remove')
-    .addEventListener('click', removeCard);
-  //Добавить обработчик событий на кнопку лайка
-  cardElement
-    .querySelector('.cards__button-like')
-    .addEventListener('click', toggleLike);
-  //Добавить обработчик событий на изображение
-  cardPhoto.addEventListener('click', () => {
-    showImagePopup(cardObj);
-  });
-  return cardElement;
-}
+//Подключить класс валидации формы
+import { FormValidator } from './FormValidator.js';
 
-//Подключить валидацию форм
-import {
-  selectorsCollectionObj,
-  hideInputErors,
-  checkValidationForm,
-} from './validate.js';
+//Получить обхъект валидации для формы добавления карточки
+const popupAddCardFormValidator = new FormValidator(
+  formSelectorCollection,
+  popupAddCardForm
+);
 
-//Ф-я открытия попапа редактирования профиля и наполнения его данынми
-function showPopupProfile() {
-  //Наполнить контентом элементы формы
-  popupProfileHeading.value = profileName.textContent;
-  popupProfileOption.value = profileOcupation.textContent;
-  //проверить валидность формы
-  checkValidationForm(
-    popupProfileForm,
-    popupProfileButtonSubmit,
-    selectorsCollectionObj
-  );
-  //скрыть сообщения о невалидности
-  hideInputErors(popupProfileForm, selectorsCollectionObj);
-  //Показать попап
-  showPopup(popupProfile);
-}
+//Получить обхъект валидации для формы profile
+const popupProfileFormValidator = new FormValidator(
+  formSelectorCollection,
+  popupProfileForm
+);
 
 //Ф-я открытия попапа изображения и наполнения его данынми
 function showImagePopup(cardObj) {
@@ -116,19 +88,54 @@ function showImagePopup(cardObj) {
   showPopup(popupImage);
 }
 
+//Функция добавления карточки
+function addCard(cardSelectorCollection, cardObj, showImagePopup) {
+  const card = new Card(cardSelectorCollection, cardObj, showImagePopup);
+  //Добавить карточку в список
+  cardsContainer.prepend(card.getCard());
+}
+
+//Добавить обработчик событий попапа и клавиши Esc
+function addListenerClosePopup() {
+  //Добавить обработчик на нажатие клавиши Esc
+  window.addEventListener('keydown', handlerWindowKeydown);
+}
+
+//Ф-я визуализации попапа
+function showPopup(popup) {
+  popup.classList.add('popup_opened');
+  //Добавить листнер попапа
+  addListenerClosePopup();
+}
+
+//Ф-я скрытия попапа
+function hidePopup(popup) {
+  popup.classList.remove('popup_opened');
+  //удаление листнера нажатия Esc
+  window.removeEventListener('keydown', handlerWindowKeydown);
+}
+
+//Ф-я открытия попапа редактирования профиля и наполнения его данынми
+function showPopupProfile() {
+  //Наполнить контентом элементы формы
+  popupProfileHeading.value = profileName.textContent;
+  popupProfileOption.value = profileOcupation.textContent;
+  //проверить валидность формы для отображения кнопки
+  popupProfileFormValidator.toggleSubmitButtonVisability();
+  //скрыть сообщения о невалидности
+  popupProfileFormValidator.hideInputErors();
+  //Показать попап
+  showPopup(popupProfile);
+}
+
 //Ф-я открытия попапа добавления карточки и наполнения его данными
 function showPopupAddCard() {
   //Очистить поля ввода формы
   popupAddCardForm.reset();
-  //проверить валидность формы
-  checkValidationForm(
-    popupAddCardForm,
-    popupAddCardButtonSubmit,
-    selectorsCollectionObj
-  );
+  //проверить валидность формы для отображения кнопки
+  popupAddCardFormValidator.toggleSubmitButtonVisability();
   //скрыть сообщения о невалидности
-  hideInputErors(popupAddCardForm, selectorsCollectionObj);
-
+  popupAddCardFormValidator.hideInputErors();
   //Показать попап
   showPopup(popupAddCard);
 }
@@ -154,26 +161,9 @@ function handleAddCardFormSubmit(evt) {
     link: popupAddCardOption.value,
   };
   //Добавить новую карточку в список
-  addCard(cardObj);
+  addCard(cardSelectorCollection, cardObj, showImagePopup);
   //Закрыть попап
   hidePopup(popupAddCard);
-}
-
-//Ф-я удаления карточки
-function removeCard(evt) {
-  evt.target.closest('.cards__card').remove();
-}
-
-//Ф-я снятия установки лайка
-function toggleLike(evt) {
-  evt.target.classList.toggle('cards__button-like_active');
-}
-
-//Ф-я визуализации попапа
-function showPopup(popup) {
-  popup.classList.add('popup_opened');
-  //Добавить листнер попапа
-  addListenerClosePopup();
 }
 
 //Ф-я закрытия попапа по кнопке Esc
@@ -193,12 +183,16 @@ function handlerHidePopupBackgroundClick(evt, popup) {
   }
 }
 
-//Ф-я скрытия попапа
-function hidePopup(popup) {
-  popup.classList.remove('popup_opened');
-  //удаление листнера нажатия Esc
-  window.removeEventListener('keydown', handlerWindowKeydown);
-}
+//Добавить карточки из перечня по-умолчанию
+initialCards.forEach((cardObj) => {
+  addCard(cardSelectorCollection, cardObj, showImagePopup);
+});
+
+//включить валидацию формы добавления карточки
+popupAddCardFormValidator.enableValidation();
+
+//включить валидацию формы
+popupProfileFormValidator.enableValidation();
 
 //Добавить событие нажатия редактировать
 buttonEdit.addEventListener('click', showPopupProfile);
@@ -225,9 +219,3 @@ Array.from(popupList).forEach((popup) => {
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 //Добавить обработчики событий кнопоки создать (submit)
 popupAddCardForm.addEventListener('submit', handleAddCardFormSubmit);
-
-//Добавить обработчик событий попапа и клавиши Esc
-function addListenerClosePopup() {
-  //Добавить обработчик на нажатие клавиши Esc
-  window.addEventListener('keydown', handlerWindowKeydown);
-}
