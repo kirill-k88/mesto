@@ -21,8 +21,8 @@ export class Card {
   }
 
   //Ф-я удаления карточки
-  _removeCard(evt) {
-    evt.target.closest(this._elementSelector).remove();
+  _removeCard() {
+    this._cardElement.remove();
   }
 
   //Ф-я установки листнеров карточки
