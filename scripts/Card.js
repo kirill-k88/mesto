@@ -1,5 +1,6 @@
 export class Card {
   constructor(cardSelectorCollection, cardObj, showCardPopup) {
+    this._me = this;
     //селекторы карточки
     this._template = cardSelectorCollection.template;
     this._elementSelector = cardSelectorCollection.elementSelector;
@@ -13,6 +14,9 @@ export class Card {
     this._cardObj = cardObj;
     //ф-я открытия окна карточки
     this._showCardPopup = showCardPopup;
+    //Привязка контекста
+    this._removeCard = this._removeCard.bind(this);
+    this._toggleLike = this._toggleLike.bind(this);
   }
 
   //Ф-я снятия установки лайка
@@ -30,11 +34,11 @@ export class Card {
     //Добавить обработчик событий на кнопку удаления
     this._cardElement
       .querySelector(this._buttonRemoveSelector)
-      .addEventListener('click', this._removeCard.bind(this));
+      .addEventListener('click', this._removeCard);
     //Добавить обработчик событий на кнопку лайка
     this._cardElement
       .querySelector(this._buttonLikeSelector)
-      .addEventListener('click', this._toggleLike.bind(this));
+      .addEventListener('click', this._toggleLike);
     //Добавить обработчик событий на изображение
     this._cardPicture.addEventListener('click', () => {
       this._showCardPopup(this._cardObj);

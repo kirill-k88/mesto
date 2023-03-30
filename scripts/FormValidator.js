@@ -68,7 +68,7 @@ export class FormValidator {
   }
 
   //Ф-я проверки валидности ввода
-  _handleCheckValidationInput(inputElement) {
+  _checkValidationInput(inputElement) {
     //если инпут невалиден показать спан
     if (!inputElement.validity.valid) {
       this._showErrorMsg(inputElement);
@@ -81,7 +81,7 @@ export class FormValidator {
   //Ф-я добавления обработчика событий ввода на все инпуты для их валидации
   _setListener(inputElement) {
     inputElement.addEventListener('input', () => {
-      this._handleCheckValidationInput(inputElement);
+      this._checkValidationInput(inputElement);
       this.toggleSubmitButtonVisability();
     });
   }
