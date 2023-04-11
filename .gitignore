@@ -1,4 +1,5 @@
 node_modules
+dist
 babel.config.js
 package-lock.json
 package.json

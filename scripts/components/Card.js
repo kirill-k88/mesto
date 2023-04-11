@@ -1,5 +1,5 @@
 export class Card {
-  constructor(cardSelectorCollection, cardObj, showCardPopup) {
+  constructor(cardSelectorCollection, cardObj, handleCardClick) {
     //селекторы карточки
     this._template = cardSelectorCollection.template;
     this._elementSelector = cardSelectorCollection.elementSelector;
@@ -12,7 +12,7 @@ export class Card {
     //объект со свойствами карточки
     this._cardObj = cardObj;
     //ф-я открытия окна карточки
-    this._showCardPopup = showCardPopup;
+    this._handleCardClick = handleCardClick;
   }
 
   //Ф-я снятия установки лайка
@@ -37,7 +37,7 @@ export class Card {
       .addEventListener('click', this._toggleLike.bind(this));
     //Добавить обработчик событий на изображение
     cardPicture.addEventListener('click', () => {
-      this._showCardPopup(this._cardObj);
+      this._handleCardClick(this._cardObj);
     });
   }
 

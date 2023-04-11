@@ -2,7 +2,7 @@
 const buttonEdit = document.querySelector('.profile__button-edit');
 const buttonAddCard = document.querySelector('.profile__button-add');
 //Получить список карточек
-const cardsContainer = document.querySelector('.cards__list');
+/* const cardsContainer = document.querySelector('.cards__list'); */
 
 //Получить список попапов
 const popupList = document.querySelectorAll('.popup');
@@ -49,10 +49,8 @@ const cardSelectorCollection = {
   buttonLikeActiveClass: 'cards__button-like_active',
 };
 
-//Подключить набор карточек
-import { initialCards } from './cards.js';
 //Подключить класс карточки
-import { Card } from './Card.js';
+import { Card } from '../components/Card.js';
 
 //Набор селекторов и классов для валидации
 const formSelectorCollection = {
@@ -64,7 +62,7 @@ const formSelectorCollection = {
 };
 
 //Подключить класс валидации формы
-import { FormValidator } from './FormValidator.js';
+import { FormValidator } from '../components/FormValidator.js';
 
 //Получить обхъект валидации для формы добавления карточки
 const popupAddCardFormValidator = new FormValidator(
@@ -88,11 +86,32 @@ function showImagePopup(cardObj) {
   showPopup(popupImage);
 }
 
+//Подключить класс секции для добавления
+import { Section } from '../components/Section.js';
+//Подключить набор карточек
+import { initialCards } from '../utils/constants.js';
+
+//Создать экземпляр секции-контейнера для карточек
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (cardObj) => {
+      const card = new Card(cardSelectorCollection, cardObj, showImagePopup);
+      const cardElement = card.getCard();
+      cardList.addItem(cardElement);
+    },
+  },
+  '.cards__list'
+);
+
+//Добавить на страницу карточки из перечня по-умолчанию
+cardList.renderItems();
+
 //Функция добавления карточки
 function addCard(cardSelectorCollection, cardObj, showImagePopup) {
   const card = new Card(cardSelectorCollection, cardObj, showImagePopup);
   //Добавить карточку в список
-  cardsContainer.prepend(card.getCard());
+  cardList.addItem(card.getCard());
 }
 
 //Добавить обработчик событий попапа и клавиши Esc
@@ -182,11 +201,6 @@ function handlerHidePopupBackgroundClick(evt, popup) {
     hidePopup(popup);
   }
 }
-
-//Добавить карточки из перечня по-умолчанию
-initialCards.forEach((cardObj) => {
-  addCard(cardSelectorCollection, cardObj, showImagePopup);
-});
 
 //включить валидацию формы добавления карточки
 popupAddCardFormValidator.enableValidation();
