@@ -28,29 +28,10 @@ const popupProfileButtonSubmit = popupProfileForm.querySelector(
   '.popup__button-submit'
 );
 
-//Получить элемент попап изображения
-const popupImage = document.querySelector('.popup_type_image');
-const popupImageFigureImg = popupImage.querySelector('.popup__image');
-const popupImageFigureCaption = popupImage.querySelector('.popup__caption');
-
 //Получить поле имя на странице
 const profileName = document.querySelector('.profile__name');
 //Получить поле имя на странице
 const profileOcupation = document.querySelector('.profile__ocupation');
-
-//Объект конфигурация с набором классов и селекторов шаблона карточки
-const cardSelectorCollection = {
-  template: '#Card',
-  elementSelector: '.cards__card',
-  pictureSelector: '.cards__photo',
-  titleSelector: '.cards__title',
-  buttonRemoveSelector: '.cards__button-remove',
-  buttonLikeSelector: '.cards__button-like',
-  buttonLikeActiveClass: 'cards__button-like_active',
-};
-
-//Подключить класс карточки
-import { Card } from '../components/Card.js';
 
 //Набор селекторов и классов для валидации
 const formSelectorCollection = {
@@ -64,39 +45,49 @@ const formSelectorCollection = {
 //Подключить класс валидации формы
 import { FormValidator } from '../components/FormValidator.js';
 
-//Получить обхъект валидации для формы добавления карточки
+//Получить объект валидации для формы добавления карточки
 const popupAddCardFormValidator = new FormValidator(
   formSelectorCollection,
   popupAddCardForm
 );
 
-//Получить обхъект валидации для формы profile
+//Получить объект валидации для формы profile
 const popupProfileFormValidator = new FormValidator(
   formSelectorCollection,
   popupProfileForm
 );
 
+//-----------------------------
+//Подключить класс секции для добавления карточек
+import { Section } from '../components/Section.js';
+//Подключить набор карточек
+import { initialCards } from '../utils/constants.js';
+//Подключить класс карточки
+import { Card } from '../components/Card.js';
+//Подключить класс попапа картинки
+import { PopupWithImage } from '../components/PopupWithImage.js';
+
+//Получить экзепляр класса попапа картинки
+const popupImage = new PopupWithImage();
+
 //Ф-я открытия попапа изображения и наполнения его данынми
 function showImagePopup(cardObj) {
-  //Наполнить контентом элемент формы
+  /*   //Наполнить контентом элемент формы
   popupImageFigureImg.src = cardObj.link;
   popupImageFigureImg.alt = cardObj.name;
   popupImageFigureCaption.textContent = cardObj.name;
   //Показать попап
-  showPopup(popupImage);
+  showPopup(popupImage); */
+  popupImage.setEventListeners();
+  popupImage.open(cardObj);
 }
-
-//Подключить класс секции для добавления
-import { Section } from '../components/Section.js';
-//Подключить набор карточек
-import { initialCards } from '../utils/constants.js';
 
 //Создать экземпляр секции-контейнера для карточек
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (cardObj) => {
-      const card = new Card(cardSelectorCollection, cardObj, showImagePopup);
+    renderer: (cardObj, showImagePopup) => {
+      const card = new Card(cardObj, showImagePopup);
       const cardElement = card.getCard();
       cardList.addItem(cardElement);
     },
@@ -108,11 +99,12 @@ const cardList = new Section(
 cardList.renderItems();
 
 //Функция добавления карточки
-function addCard(cardSelectorCollection, cardObj, showImagePopup) {
-  const card = new Card(cardSelectorCollection, cardObj, showImagePopup);
+function addCard(cardObj, showImagePopup) {
+  const card = new Card(cardObj, showImagePopup);
   //Добавить карточку в список
   cardList.addItem(card.getCard());
 }
+//---------------------------------
 
 //Добавить обработчик событий попапа и клавиши Esc
 function addListenerClosePopup() {
@@ -180,7 +172,7 @@ function handleAddCardFormSubmit(evt) {
     link: popupAddCardOption.value,
   };
   //Добавить новую карточку в список
-  addCard(cardSelectorCollection, cardObj, showImagePopup);
+  addCard(cardObj, showImagePopup);
   //Закрыть попап
   hidePopup(popupAddCard);
 }

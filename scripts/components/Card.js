@@ -1,5 +1,6 @@
+import { cardSelectorCollection } from '../utils/constants.js';
 export class Card {
-  constructor(cardSelectorCollection, cardObj, handleCardClick) {
+  constructor(cardObj, handleCardClick) {
     //селекторы карточки
     this._template = cardSelectorCollection.template;
     this._elementSelector = cardSelectorCollection.elementSelector;
