@@ -15,19 +15,19 @@ export class Card {
     //ф-я открытия окна карточки
     this._showCardPopup = showCardPopup;
     //Привязка контекста
-    this._removeCard = this._removeCard.bind(this);
-    this._toggleLike = this._toggleLike.bind(this);
+    /*  this._removeCard = this._removeCard.bind(this);
+    this._toggleLike = this._toggleLike.bind(this); */
   }
 
   //Ф-я снятия установки лайка
-  _toggleLike(evt) {
+  _toggleLike = (evt) => {
     evt.target.classList.toggle(this._buttonLikeActiveClass);
-  }
+  };
 
   //Ф-я удаления карточки
-  _removeCard() {
+  _removeCard = () => {
     this._cardElement.remove();
-  }
+  };
 
   //Ф-я установки листнеров карточки
   _setListeners() {
