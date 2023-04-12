@@ -1,25 +1,24 @@
 import Popup from './Popup.js';
-import { popupImageSelectorCollection } from '../utils/constants.js';
 
 export class PopupWithImage extends Popup {
-  constructor() {
-    /*  { link, name }, */
-    super(popupImageSelectorCollection);
-    /*  this._link = link;
-    this._name = name; */
-    console.log(this);
-    this._figureImg = this._popupElement.querySelector(
-      popupImageSelectorCollection.figureImgSelector
-    );
-    this._figureCaption = this._popupElement.querySelector(
-      popupImageSelectorCollection.figureCaptionSelector
+  constructor(
+    { popupSelector, figureImgSelector, figureCaptionSelector },
+    popupIsOpenedClass,
+    closeButtonSelector
+  ) {
+    super(popupSelector, popupIsOpenedClass, closeButtonSelector);
+    this._figureImgElement =
+      this._popupElement.querySelector(figureImgSelector);
+    this._figureCaptionElement = this._popupElement.querySelector(
+      figureCaptionSelector
     );
   }
 
+  //переопределенная ф-я открытия попапа
   open = ({ link, name }) => {
-    this._figureImg.src = link;
-    this._figureImg.alt = name;
-    this._figureCaption.textContent = name;
+    this._figureImgElement.src = link;
+    this._figureImgElement.alt = name;
+    this._figureCaptionElement.textContent = name;
     super.open();
   };
 }

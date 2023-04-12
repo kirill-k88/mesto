@@ -1,15 +1,26 @@
-import { cardSelectorCollection } from '../utils/constants.js';
 export class Card {
-  constructor(cardObj, handleCardClick) {
+  constructor(
+    cardObj,
+    handleCardClick,
+    {
+      template,
+      elementSelector,
+      pictureSelector,
+      titleSelector,
+      buttonRemoveSelector,
+      buttonLikeSelector,
+      buttonLikeActiveClass,
+    }
+  ) {
     //селекторы карточки
-    this._template = cardSelectorCollection.template;
-    this._elementSelector = cardSelectorCollection.elementSelector;
-    this._pictureSelector = cardSelectorCollection.pictureSelector;
-    this._titleSelector = cardSelectorCollection.titleSelector;
-    this._buttonRemoveSelector = cardSelectorCollection.buttonRemoveSelector;
-    this._buttonLikeSelector = cardSelectorCollection.buttonLikeSelector;
+    this._template = template;
+    this._elementSelector = elementSelector;
+    this._pictureSelector = pictureSelector;
+    this._titleSelector = titleSelector;
+    this._buttonRemoveSelector = buttonRemoveSelector;
+    this._buttonLikeSelector = buttonLikeSelector;
     //классы для интерактивности карточки
-    this._buttonLikeActiveClass = cardSelectorCollection.buttonLikeActiveClass;
+    this._buttonLikeActiveClass = buttonLikeActiveClass;
     //объект со свойствами карточки
     this._cardObj = cardObj;
     //ф-я открытия окна карточки

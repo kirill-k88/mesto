@@ -1,197 +1,168 @@
-//Получить кнопки
-const buttonEdit = document.querySelector('.profile__button-edit');
-const buttonAddCard = document.querySelector('.profile__button-add');
-//Получить список карточек
-/* const cardsContainer = document.querySelector('.cards__list'); */
+//Подключить константы
+import {
+  initialCards,
+  popupImageSelectorCollection,
+  cardSelectorCollection,
+  popupProfileSelectorCollection,
+  popupAddCardSelectorCollection,
+  profileSelectorCollection,
+  popupIsOpenedClass,
+  closeButtonSelector,
+  formSelectorCollection,
+  buttonEditSelector,
+  buttonAddCardSelector,
+  cardContainerSelector,
+} from '../utils/constants.js';
 
-//Получить список попапов
-const popupList = document.querySelectorAll('.popup');
-
-//Кнопки закрытия попапов
-const popupCloseButtons = document.querySelectorAll('.popup__button-close');
-
-//Получить элементы попапа добавления
-const popupAddCard = document.querySelector('.popup_type_add');
-const popupAddCardForm = document.forms['cardAdd-form'];
-const popupAddCardHeading = popupAddCardForm.elements.cardNameInput;
-const popupAddCardOption = popupAddCardForm.elements.cardUrlInput;
-const popupAddCardButtonSubmit = popupAddCardForm.querySelector(
-  '.popup__button-submit'
-);
-
-//Получить элементы попапа редактирования профиля
-const popupProfile = document.querySelector('.popup_type_edit');
-const popupProfileForm = document.forms['profile-form'];
-const popupProfileHeading = popupProfileForm.elements.profileNameInput;
-const popupProfileOption = popupProfileForm.elements.ocupationInput;
-const popupProfileButtonSubmit = popupProfileForm.querySelector(
-  '.popup__button-submit'
-);
-
-//Получить поле имя на странице
-const profileName = document.querySelector('.profile__name');
-//Получить поле имя на странице
-const profileOcupation = document.querySelector('.profile__ocupation');
-
-//Набор селекторов и классов для валидации
-const formSelectorCollection = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup__button-submit_inactive',
-  inputErrorClass: 'popup__input_invalid',
-  errorClass: 'popup__input-error_active',
-};
+//Подключить класс профайла
+import { UserInfo } from '../components/UserInfo.js';
 
 //Подключить класс валидации формы
 import { FormValidator } from '../components/FormValidator.js';
 
-//Получить объект валидации для формы добавления карточки
-const popupAddCardFormValidator = new FormValidator(
-  formSelectorCollection,
-  popupAddCardForm
-);
-
-//Получить объект валидации для формы profile
-const popupProfileFormValidator = new FormValidator(
-  formSelectorCollection,
-  popupProfileForm
-);
-
-//-----------------------------
 //Подключить класс секции для добавления карточек
 import { Section } from '../components/Section.js';
-//Подключить набор карточек
-import { initialCards } from '../utils/constants.js';
+
 //Подключить класс карточки
 import { Card } from '../components/Card.js';
+
 //Подключить класс попапа картинки
 import { PopupWithImage } from '../components/PopupWithImage.js';
 
-//Получить экзепляр класса попапа картинки
-const popupImage = new PopupWithImage();
+//Подключить класс попапа профайла
+import { PopupWithForm } from '../components/PopupWithForm.js';
 
-//Ф-я открытия попапа изображения и наполнения его данынми
-function showImagePopup(cardObj) {
-  /*   //Наполнить контентом элемент формы
-  popupImageFigureImg.src = cardObj.link;
-  popupImageFigureImg.alt = cardObj.name;
-  popupImageFigureCaption.textContent = cardObj.name;
-  //Показать попап
-  showPopup(popupImage); */
-  popupImage.setEventListeners();
-  popupImage.open(cardObj);
+//Получить элементы кнопок
+const buttonEditElement = document.querySelector(buttonEditSelector);
+const buttonAddCardElement = document.querySelector(buttonAddCardSelector);
+
+//Получить форму попапа добавления карточки
+const popupAddCardFormElement =
+  document.forms[popupAddCardSelectorCollection.popupFormName];
+
+//Получить форму попапа редактирования профиля
+const popupProfileFormElement =
+  document.forms[popupProfileSelectorCollection.popupFormName];
+
+//Получить экземпляр класса профайла
+const profileInfo = new UserInfo(profileSelectorCollection);
+
+//Получить экземпляр валидации для формы добавления карточки
+const popupAddCardFormValidator = new FormValidator(
+  formSelectorCollection,
+  popupAddCardFormElement
+);
+
+//Получить экземпляр валидации для формы profile
+const popupProfileFormValidator = new FormValidator(
+  formSelectorCollection,
+  popupProfileFormElement
+);
+
+//Получить экзепляр класса попапа картинки
+const popupImage = new PopupWithImage(
+  popupImageSelectorCollection,
+  popupIsOpenedClass,
+  closeButtonSelector
+);
+
+//Добавить слушателей попапа картинки
+popupImage.setEventListeners();
+
+//Ф-я создания экземпляра карточки
+function createNewCardObject(cardObj) {
+  const newCard = new Card(
+    cardObj,
+    () => {
+      popupImage.open(newCard._cardObj);
+    },
+    cardSelectorCollection
+  );
+  return newCard;
 }
 
 //Создать экземпляр секции-контейнера для карточек
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (cardObj, showImagePopup) => {
-      const card = new Card(cardObj, showImagePopup);
+    renderer: (cardObj) => {
+      const card = createNewCardObject(cardObj);
       const cardElement = card.getCard();
       cardList.addItem(cardElement);
     },
   },
-  '.cards__list'
+  cardContainerSelector
 );
 
 //Добавить на страницу карточки из перечня по-умолчанию
 cardList.renderItems();
 
 //Функция добавления карточки
-function addCard(cardObj, showImagePopup) {
-  const card = new Card(cardObj, showImagePopup);
+function addCard(cardObj) {
+  const card = createNewCardObject(cardObj);
   //Добавить карточку в список
   cardList.addItem(card.getCard());
 }
-//---------------------------------
 
-//Добавить обработчик событий попапа и клавиши Esc
-function addListenerClosePopup() {
-  //Добавить обработчик на нажатие клавиши Esc
-  window.addEventListener('keydown', handlerWindowKeydown);
-}
+//Экземпляр класса попапа с формаой для профайла
+const popupProfile = new PopupWithForm(
+  popupProfileSelectorCollection,
+  popupProfileFormElement,
+  popupIsOpenedClass,
+  closeButtonSelector,
+  handleProfileFormSubmit
+);
 
-//Ф-я визуализации попапа
-function showPopup(popup) {
-  popup.classList.add('popup_opened');
-  //Добавить листнер попапа
-  addListenerClosePopup();
-}
+//Устанавить слушателей попапа профайла
+popupProfile.setEventListeners();
 
-//Ф-я скрытия попапа
-function hidePopup(popup) {
-  popup.classList.remove('popup_opened');
-  //удаление листнера нажатия Esc
-  window.removeEventListener('keydown', handlerWindowKeydown);
-}
-
-//Ф-я открытия попапа редактирования профиля и наполнения его данынми
-function showPopupProfile() {
-  //Наполнить контентом элементы формы
-  popupProfileHeading.value = profileName.textContent;
-  popupProfileOption.value = profileOcupation.textContent;
+//Ф-я проверки валидации формы профайла при ее открытии
+function checkValidationProfileFormBeforOpen() {
   //проверить валидность формы для отображения кнопки
   popupProfileFormValidator.toggleSubmitButtonVisability();
   //скрыть сообщения о невалидности
   popupProfileFormValidator.hideInputErors();
-  //Показать попап
-  showPopup(popupProfile);
 }
 
-//Ф-я открытия попапа добавления карточки и наполнения его данными
-function showPopupAddCard() {
-  //Очистить поля ввода формы
-  popupAddCardForm.reset();
+//Экземпляр класса попапа с формаой для добавления карточек
+const popupAddCard = new PopupWithForm(
+  popupAddCardSelectorCollection,
+  popupAddCardFormElement,
+  popupIsOpenedClass,
+  closeButtonSelector,
+  handleAddCardFormSubmit
+);
+
+//Устанавить слушателей попапа добавления карточек
+popupAddCard.setEventListeners();
+
+//Ф-я проверки валидации формы добавления карточки при ее открытии
+function checkValidationAddCardFormBeforOpen() {
   //проверить валидность формы для отображения кнопки
   popupAddCardFormValidator.toggleSubmitButtonVisability();
   //скрыть сообщения о невалидности
   popupAddCardFormValidator.hideInputErors();
-  //Показать попап
-  showPopup(popupAddCard);
 }
 
-//Ф-я сохранения значения, глушим стандартный обработчик
+//Ф-я обработки сабмита формы профайла
 function handleProfileFormSubmit(evt) {
   //заглушить стандартное действие submit
   evt.preventDefault();
-  //Добавить на экран значения
-  profileName.textContent = popupProfileHeading.value;
   //добавить на экран значения
-  profileOcupation.textContent = popupProfileOption.value;
-  //Закрыть попап
-  hidePopup(popupProfile);
+  profileInfo.setUserInfo(this._getInputValues());
 }
 
-//Ф-я создания карточки по данным из попапа
+//Ф-я обработки сабмита формы добавления карточки
 function handleAddCardFormSubmit(evt) {
   //заглушить стандартное действие submit
   evt.preventDefault();
+
   const cardObj = {
-    name: popupAddCardHeading.value,
-    link: popupAddCardOption.value,
+    name: this._getInputValues().inputHeading,
+    link: this._getInputValues().inputOption,
   };
   //Добавить новую карточку в список
-  addCard(cardObj, showImagePopup);
-  //Закрыть попап
-  hidePopup(popupAddCard);
-}
-
-//Ф-я закрытия попапа по кнопке Esc
-function handlerWindowKeydown(evt) {
-  if (evt.key === 'Escape') {
-    //Получить открытй попап, т.к. его нельзя передать в обработчик
-    // нужно удалять листнер, по этой причине невозможно использовать анонимную функцию
-    const openedPopup = document.querySelector('.popup_opened');
-    hidePopup(openedPopup);
-  }
-}
-
-//Ф-я закрытия попапа по клику по фону
-function handlerHidePopupBackgroundClick(evt, popup) {
-  if (evt.target === popup) {
-    hidePopup(popup);
-  }
+  addCard(cardObj);
 }
 
 //включить валидацию формы добавления карточки
@@ -200,28 +171,14 @@ popupAddCardFormValidator.enableValidation();
 //включить валидацию формы
 popupProfileFormValidator.enableValidation();
 
-//Добавить событие нажатия редактировать
-buttonEdit.addEventListener('click', showPopupProfile);
-//Добавить событие нажатия добавить карточку
-buttonAddCard.addEventListener('click', showPopupAddCard);
-
-//Нажатие на кнопку закрыть попапа
-Array.from(popupCloseButtons).forEach((closeButton) => {
-  const popup = closeButton.closest('.popup');
-  closeButton.addEventListener('click', () => {
-    hidePopup(popup);
-  });
+//Добавить событие нажатия кнопки редактировать
+buttonEditElement.addEventListener('click', () => {
+  popupProfile.setInputValues(profileInfo.getUserInfo());
+  popupProfile.open(checkValidationProfileFormBeforOpen);
 });
 
-//Нажатие на фон попапа приводт к закрытию
-Array.from(popupList).forEach((popup) => {
-  //Добавить обработчик события нажатия на фон для всех поппапов
-  popup.addEventListener('click', (evt) => {
-    handlerHidePopupBackgroundClick(evt, popup);
-  });
+//Добавить событие нажатия кнопки добавить карточку
+buttonAddCardElement.addEventListener('click', () => {
+  popupAddCard._popupFormElement.reset();
+  popupAddCard.open(checkValidationAddCardFormBeforOpen);
 });
-
-//Добавить обработчики событий кнопоки сохранить (submit)
-popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
-//Добавить обработчики событий кнопоки создать (submit)
-popupAddCardForm.addEventListener('submit', handleAddCardFormSubmit);
