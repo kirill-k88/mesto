@@ -12,25 +12,25 @@ import {
   buttonEditSelector,
   buttonAddCardSelector,
   cardContainerSelector,
-} from '../utils/constants.js';
+} from '../scripts/utils/constants.js';
 
 //Подключить класс профайла
-import { UserInfo } from '../components/UserInfo.js';
+import { UserInfo } from '../scripts/components/UserInfo.js';
 
 //Подключить класс валидации формы
-import { FormValidator } from '../components/FormValidator.js';
+import { FormValidator } from '../scripts/components/FormValidator.js';
 
 //Подключить класс секции для добавления карточек
-import { Section } from '../components/Section.js';
+import { Section } from '../scripts/components/Section.js';
 
 //Подключить класс карточки
-import { Card } from '../components/Card.js';
+import { Card } from '../scripts/components/Card.js';
 
 //Подключить класс попапа картинки
-import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
 
 //Подключить класс попапа профайла
-import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithForm } from '../scripts/components/PopupWithForm.js';
 
 //Получить элементы кнопок
 const buttonEditElement = document.querySelector(buttonEditSelector);
