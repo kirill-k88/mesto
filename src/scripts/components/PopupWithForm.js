@@ -36,11 +36,16 @@ export class PopupWithForm extends Popup {
   };
 
   //Получить тексты полей в объект
-  _getInputValues = () => {
+  getInputValues = () => {
     return {
       inputHeading: this._popupInputHeadingElement.value,
       inputOption: this._popupInputOptionElement.value,
     };
+  };
+
+  //сброс полей формы
+  reset = () => {
+    this._popupFormElement.reset();
   };
 
   //Переопределенная ф-я открытия попапа

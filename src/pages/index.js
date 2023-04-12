@@ -158,8 +158,8 @@ function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
   const cardObj = {
-    name: this._getInputValues().inputHeading,
-    link: this._getInputValues().inputOption,
+    name: this.getInputValues().inputHeading,
+    link: this.getInputValues().inputOption,
   };
   //Добавить новую карточку в список
   addCard(cardObj);
@@ -179,6 +179,6 @@ buttonEditElement.addEventListener('click', () => {
 
 //Добавить событие нажатия кнопки добавить карточку
 buttonAddCardElement.addEventListener('click', () => {
-  popupAddCard._popupFormElement.reset();
+  popupAddCard.reset();
   popupAddCard.open(checkValidationAddCardFormBeforOpen);
 });
