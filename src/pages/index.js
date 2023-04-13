@@ -73,15 +73,16 @@ const popupImage = new PopupWithImage(
 popupImage.setEventListeners();
 
 //Ф-я создания экземпляра карточки
-function createNewCardObject(cardObj) {
+function renderCard(cardObj) {
   const newCard = new Card(
     cardObj,
-    () => {
-      popupImage.open(newCard._cardObj);
+    (cardData) => {
+      popupImage.open(cardData);
     },
     cardSelectorCollection
   );
-  return newCard;
+  const cardElement = newCard.getCard();
+  cardList.addItem(cardElement);
 }
 
 //Создать экземпляр секции-контейнера для карточек
@@ -89,9 +90,7 @@ const cardList = new Section(
   {
     items: initialCards,
     renderer: (cardObj) => {
-      const card = createNewCardObject(cardObj);
-      const cardElement = card.getCard();
-      cardList.addItem(cardElement);
+      renderCard(cardObj);
     },
   },
   cardContainerSelector
@@ -102,17 +101,12 @@ cardList.renderItems();
 
 //Функция добавления карточки
 function addCard(cardObj) {
-  const card = createNewCardObject(cardObj);
-  //Добавить карточку в список
-  cardList.addItem(card.getCard());
+  renderCard(cardObj);
 }
 
 //Экземпляр класса попапа с формаой для профайла
 const popupProfile = new PopupWithForm(
   popupProfileSelectorCollection,
-  popupProfileFormElement,
-  popupIsOpenedClass,
-  closeButtonSelector,
   handleProfileFormSubmit
 );
 
@@ -130,9 +124,6 @@ function checkValidationProfileFormBeforOpen() {
 //Экземпляр класса попапа с формаой для добавления карточек
 const popupAddCard = new PopupWithForm(
   popupAddCardSelectorCollection,
-  popupAddCardFormElement,
-  popupIsOpenedClass,
-  closeButtonSelector,
   handleAddCardFormSubmit
 );
 
@@ -148,21 +139,16 @@ function checkValidationAddCardFormBeforOpen() {
 }
 
 //Ф-я обработки сабмита формы профайла
-function handleProfileFormSubmit(evt) {
-  //заглушить стандартное действие submit
-  evt.preventDefault();
+function handleProfileFormSubmit(inputValues) {
   //добавить на экран значения
-  profileInfo.setUserInfo(this.getInputValues());
+  profileInfo.setUserInfo(inputValues);
 }
 
 //Ф-я обработки сабмита формы добавления карточки
-function handleAddCardFormSubmit(evt) {
-  //заглушить стандартное действие submit
-  evt.preventDefault();
-
+function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
   const cardObj = {
-    name: this.getInputValues().inputHeading,
-    link: this.getInputValues().inputOption,
+    name: cardNameInput,
+    link: cardUrlInput,
   };
   //Добавить новую карточку в список
   addCard(cardObj);
@@ -177,11 +163,12 @@ popupProfileFormValidator.enableValidation();
 //Добавить событие нажатия кнопки редактировать
 buttonEditElement.addEventListener('click', () => {
   popupProfile.setInputValues(profileInfo.getUserInfo());
-  popupProfile.open(checkValidationProfileFormBeforOpen);
+  checkValidationProfileFormBeforOpen();
+  popupProfile.open();
 });
 
 //Добавить событие нажатия кнопки добавить карточку
 buttonAddCardElement.addEventListener('click', () => {
-  popupAddCard.reset();
-  popupAddCard.open(checkValidationAddCardFormBeforOpen);
+  checkValidationAddCardFormBeforOpen();
+  popupAddCard.open();
 });

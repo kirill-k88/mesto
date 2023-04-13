@@ -9,14 +9,14 @@ export class UserInfo {
   //Получить данные из тестов профайла в объект
   getUserInfo = () => {
     return {
-      inputHeading: this._profileNameElement.textContent,
-      inputOption: this._profileOcupationElement.textContent,
+      profileNameInput: this._profileNameElement.textContent,
+      ocupationInput: this._profileOcupationElement.textContent,
     };
   };
 
   //Записать данные из объекта в тесты профайла
-  setUserInfo = ({ inputHeading, inputOption }) => {
-    this._profileNameElement.textContent = inputHeading;
-    this._profileOcupationElement.textContent = inputOption;
+  setUserInfo = ({ profileNameInput, ocupationInput }) => {
+    this._profileNameElement.textContent = profileNameInput;
+    this._profileOcupationElement.textContent = ocupationInput;
   };
 }

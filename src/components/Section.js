@@ -12,6 +12,6 @@ export class Section {
 
   //Ф-я отрисовки карточек из саписка
   renderItems = () => {
-    this._items.forEach((item) => this._renderer(item));
+    this._items.forEach(this._renderer);
   };
 }

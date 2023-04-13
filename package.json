@@ -5,7 +5,7 @@
   "main": "./src/pages/index.js",
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",

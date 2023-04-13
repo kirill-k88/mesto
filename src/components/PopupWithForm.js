@@ -4,24 +4,30 @@ export class PopupWithForm extends Popup {
   constructor(
     {
       popupSelector,
+      popupFormName,
       popupInputHeadingName,
       popupInputOptionName,
       popupButtonSubmitSelector,
+      inputSelector,
+      popupIsOpenedClass,
+      closeButtonSelector,
     },
-    popupFormElement,
-    popupIsOpenedClass,
-    closeButtonSelector,
     handleFormSubmit
   ) {
     super(popupSelector, popupIsOpenedClass, closeButtonSelector);
 
-    this._popupFormElement = popupFormElement;
+    //получить форму
+    this._popupFormElement = document.forms[popupFormName];
 
     //получить элементы формы
     this._popupInputHeadingElement =
       this._popupFormElement.elements[popupInputHeadingName];
     this._popupInputOptionElement =
       this._popupFormElement.elements[popupInputOptionName];
+
+    //получить все инпуты
+    this._inputList = this._popupFormElement.querySelectorAll(inputSelector);
+
     this._popupButtonSubmitElement = this._popupFormElement.querySelector(
       popupButtonSubmitSelector
     );
@@ -30,34 +36,33 @@ export class PopupWithForm extends Popup {
   }
 
   //Наполнить контентом элементы формы
-  setInputValues = ({ inputHeading, inputOption }) => {
-    this._popupInputHeadingElement.value = inputHeading;
-    this._popupInputOptionElement.value = inputOption;
+  setInputValues = (inputValues) => {
+    this._inputList.forEach((input) => {
+      input.value = inputValues[input.name];
+    });
   };
 
   //Получить тексты полей в объект
-  getInputValues = () => {
-    return {
-      inputHeading: this._popupInputHeadingElement.value,
-      inputOption: this._popupInputOptionElement.value,
-    };
+  _getInputValues = () => {
+    const inputValues = {};
+    this._inputList.forEach((input) => {
+      inputValues[input.name] = input.value;
+    });
+    return inputValues;
   };
 
-  //сброс полей формы
-  reset = () => {
+  //переопределенная функция закрытия
+  _close = () => {
+    //сброс полей формы
     this._popupFormElement.reset();
+    super._close();
   };
-
-  //Переопределенная ф-я открытия попапа
-  open(checkValidationFormBeforOpen) {
-    checkValidationFormBeforOpen();
-    super.open();
-  }
 
   //Переопределенная ф-я установки листнеров
   setEventListeners() {
     this._popupElement.addEventListener('submit', (evt) => {
-      this._handleFormSubmit(evt);
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
       this._close();
     });
     super.setEventListeners();

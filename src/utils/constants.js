@@ -46,6 +46,8 @@ export const popupImageSelectorCollection = {
 
 //CSS класс открытого попапа
 export const popupIsOpenedClass = 'popup_opened';
+//Селектор инпутов форм
+const inputSelector = '.popup__input';
 //Селектор кнопки закрыть на попапах
 export const closeButtonSelector = '.popup__button-close';
 //Селекторы кнопок на странице
@@ -57,7 +59,10 @@ export const cardContainerSelector = '.cards__list';
 //Набор селекторов и имен для работы с попапом редактирования профайла
 export const popupProfileSelectorCollection = {
   popupSelector: '.popup_type_edit',
+  popupIsOpenedClass: popupIsOpenedClass,
+  closeButtonSelector: closeButtonSelector,
   popupFormName: 'profile-form',
+  inputSelector: inputSelector,
   popupInputHeadingName: 'profileNameInput',
   popupInputOptionName: 'ocupationInput',
   popupButtonSubmitSelector: '.popup__button-submit',
@@ -72,7 +77,10 @@ export const profileSelectorCollection = {
 //Набор селекторов и имен для работы с попапом добавления карточки
 export const popupAddCardSelectorCollection = {
   popupSelector: '.popup_type_add',
+  popupIsOpenedClass: popupIsOpenedClass,
+  closeButtonSelector: closeButtonSelector,
   popupFormName: 'cardAdd-form',
+  inputSelector: inputSelector,
   popupInputHeadingName: 'cardNameInput',
   popupInputOptionName: 'cardUrlInput',
   popupButtonSubmitSelector: '.popup__button-submit',

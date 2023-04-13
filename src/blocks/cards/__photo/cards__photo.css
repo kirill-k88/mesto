@@ -6,4 +6,5 @@
   object-position: center;
   object-fit: cover;
   cursor: pointer;
+  background-color: #000;
 }
