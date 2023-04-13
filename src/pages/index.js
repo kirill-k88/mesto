@@ -1,5 +1,5 @@
 //Подключить css
-import '../../pages/index.css';
+import './index.css';
 
 //Подключить константы
 import {
