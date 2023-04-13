@@ -5,23 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
   <link rel="shortcut icon" href="#">
 </head>
 
 <body class="page">
-  <script type="module" src="./pages/index.js"></script>
 
   <div class="root">
     <header class="header">
       <a href="#" class="header__link" target="_blank">
-        <img class="header__logo" src="./images/header/header-logo.svg" alt="Лого">
+        <img class="header__logo" src="<%=require('./images/header/header-logo.svg')%>" alt="Лого">
       </a>
     </header>
 
     <main>
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile/profile-avatar.jpg" alt="Аватар">
+        <img class="profile__avatar" src="<%=require('./images/profile/profile-avatar.jpg')%>" alt="Аватар">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__button-edit common-link" type="button"></button>
