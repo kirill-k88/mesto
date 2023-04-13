@@ -1,22 +1,33 @@
 export class Card {
-  constructor(cardSelectorCollection, cardObj, showCardPopup) {
-    this._me = this;
+  constructor(
+    cardObj,
+    handleCardClick,
+    {
+      template,
+      elementSelector,
+      pictureSelector,
+      titleSelector,
+      buttonRemoveSelector,
+      buttonLikeSelector,
+      buttonLikeActiveClass,
+    }
+  ) {
     //селекторы карточки
-    this._template = cardSelectorCollection.template;
-    this._elementSelector = cardSelectorCollection.elementSelector;
-    this._pictureSelector = cardSelectorCollection.pictureSelector;
-    this._titleSelector = cardSelectorCollection.titleSelector;
-    this._buttonRemoveSelector = cardSelectorCollection.buttonRemoveSelector;
-    this._buttonLikeSelector = cardSelectorCollection.buttonLikeSelector;
+    this._template = template;
+    this._elementSelector = elementSelector;
+    this._pictureSelector = pictureSelector;
+    this._titleSelector = titleSelector;
+    this._buttonRemoveSelector = buttonRemoveSelector;
+    this._buttonLikeSelector = buttonLikeSelector;
     //классы для интерактивности карточки
-    this._buttonLikeActiveClass = cardSelectorCollection.buttonLikeActiveClass;
+    this._buttonLikeActiveClass = buttonLikeActiveClass;
     //объект со свойствами карточки
     this._cardObj = cardObj;
     //ф-я открытия окна карточки
-    this._showCardPopup = showCardPopup;
-    //Привязка контекста
-    /*  this._removeCard = this._removeCard.bind(this);
-    this._toggleLike = this._toggleLike.bind(this); */
+    this._handleCardClick = handleCardClick;
+
+    //Получить содержимое шаблона карточки
+    this._cardTemplate = document.querySelector(this._template);
   }
 
   //Ф-я снятия установки лайка
@@ -41,24 +52,24 @@ export class Card {
       .addEventListener('click', this._toggleLike);
     //Добавить обработчик событий на изображение
     this._cardPicture.addEventListener('click', () => {
-      this._showCardPopup(this._cardObj);
+      this._handleCardClick(this._cardObj);
     });
+  }
+
+  _getCardImg() {
+    const cardPicture = this._cardElement.querySelector(this._pictureSelector);
+    return cardPicture;
   }
 
   _getCardElement() {
     //Получить содержимое шаблона карточки
-    const cardTemplateContent = document.querySelector(this._template).content;
+    const cardTemplateContent = this._cardTemplate.content;
     //Получить элемент катрочки из шаблона
     const cardElement = cardTemplateContent
       .querySelector(this._elementSelector)
       .cloneNode(true);
 
     return cardElement;
-  }
-
-  _getCardImg() {
-    const cardPicture = this._cardElement.querySelector(this._pictureSelector);
-    return cardPicture;
   }
 
   getCard() {
