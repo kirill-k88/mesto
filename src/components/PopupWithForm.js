@@ -28,9 +28,6 @@ export class PopupWithForm extends Popup {
     //получить все инпуты
     this._inputList = this._popupFormElement.querySelectorAll(inputSelector);
 
-    this._popupButtonSubmitElement = this._popupFormElement.querySelector(
-      popupButtonSubmitSelector
-    );
     //функция обработки сабмита формы
     this._handleFormSubmit = handleFormSubmit;
   }
@@ -52,10 +49,10 @@ export class PopupWithForm extends Popup {
   };
 
   //переопределенная функция закрытия
-  _close = () => {
+  close = () => {
     //сброс полей формы
     this._popupFormElement.reset();
-    super._close();
+    super.close();
   };
 
   //Переопределенная ф-я установки листнеров
@@ -63,7 +60,7 @@ export class PopupWithForm extends Popup {
     this._popupElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this._close();
+      this.close();
     });
     super.setEventListeners();
   }

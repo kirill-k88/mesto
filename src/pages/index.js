@@ -99,11 +99,6 @@ const cardList = new Section(
 //Добавить на страницу карточки из перечня по-умолчанию
 cardList.renderItems();
 
-//Функция добавления карточки
-function addCard(cardObj) {
-  renderCard(cardObj);
-}
-
 //Экземпляр класса попапа с формаой для профайла
 const popupProfile = new PopupWithForm(
   popupProfileSelectorCollection,
@@ -151,7 +146,7 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     link: cardUrlInput,
   };
   //Добавить новую карточку в список
-  addCard(cardObj);
+  renderCard(cardObj);
 }
 
 //включить валидацию формы добавления карточки
