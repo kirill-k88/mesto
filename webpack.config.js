@@ -11,6 +11,7 @@ module.exports = {
     filename: 'index.js',
     clean: true,
   },
+  devtool: 'eval',
   devServer: {
     port: 8086,
     compress: true,
@@ -18,11 +19,11 @@ module.exports = {
   },
   module: {
     rules: [
-      {
+      /* {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: '/node_modules/',
-      },
+      },*/
       {
         test: /\.css$/,
         use: [
