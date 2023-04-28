@@ -11,6 +11,10 @@ module.exports = {
     filename: 'index.js',
     clean: true,
   },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   devtool: 'eval',
   devServer: {
     port: 8086,

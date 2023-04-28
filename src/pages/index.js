@@ -3,7 +3,7 @@ import './index.css';
 
 //Подключить константы
 import {
-  initialCards,
+  //initialCards,
   popupImageSelectorCollection,
   cardSelectorCollection,
   popupProfileSelectorCollection,
@@ -34,6 +34,9 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 
 //Подключить класс попапа профайла
 import { PopupWithForm } from '../components/PopupWithForm.js';
+
+//Подключить класс Api
+import { Api } from '../components/Api.js';
 
 //Получить элементы кнопок
 const buttonEditElement = document.querySelector(buttonEditSelector);
@@ -85,19 +88,28 @@ function renderCard(cardObj) {
   cardList.addItem(cardElement);
 }
 
-//Создать экземпляр секции-контейнера для карточек
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (cardObj) => {
-      renderCard(cardObj);
-    },
+//Получить карточки с сервера
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
+  headers: {
+    authorization: '5dc10575-faf8-4cb0-bf95-93ad59b5cd72',
+    'Content-Type': 'application/json',
   },
-  cardContainerSelector
-);
+});
 
-//Добавить на страницу карточки из перечня по-умолчанию
-cardList.renderItems();
+//Создать экземпляр секции-контейнера для карточек
+const cardList = new Section(renderCard, cardContainerSelector);
+
+//Поуличить карточки и отрисовать
+api
+  .getInitialCards()
+  .then((initialCards) => {
+    //Добавить на страницу карточки из перечня по-умолчанию
+    cardList.renderItems(initialCards);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Экземпляр класса попапа с формаой для профайла
 const popupProfile = new PopupWithForm(

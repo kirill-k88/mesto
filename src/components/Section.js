@@ -1,6 +1,5 @@
 export class Section {
-  constructor({ items, renderer }, containerSelector) {
-    this._items = items;
+  constructor(renderer, containerSelector) {
     this._renderer = renderer;
     this._containerElement = document.querySelector(containerSelector);
   }
@@ -11,7 +10,9 @@ export class Section {
   };
 
   //Ф-я отрисовки карточек из саписка
-  renderItems = () => {
+  renderItems = (items) => {
+    this._items = items;
+    console.log('_items', this._items);
     this._items.forEach(this._renderer);
   };
 }
