@@ -1,31 +1,3 @@
-//Карточки по-умолчанию
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
 //Набор классов и селекторов шаблона карточки
 export const cardSelectorCollection = {
   template: '#Card',
@@ -70,6 +42,7 @@ export const popupProfileSelectorCollection = {
 
 //Набор селекторов текстов профайла
 export const profileSelectorCollection = {
+  profileAvatar: '.profile__avatar',
   profileNameSelector: '.profile__name',
   profileOcupationSelector: '.profile__ocupation',
 };

@@ -3,7 +3,6 @@ import './index.css';
 
 //Подключить константы
 import {
-  //initialCards,
   popupImageSelectorCollection,
   cardSelectorCollection,
   popupProfileSelectorCollection,
@@ -88,7 +87,10 @@ function renderCard(cardObj) {
   cardList.addItem(cardElement);
 }
 
-//Получить карточки с сервера
+//Создать экземпляр секции-контейнера для карточек
+const cardList = new Section(renderCard, cardContainerSelector);
+
+//Создать экземпляр класса Api
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
   headers: {
@@ -97,10 +99,12 @@ const api = new Api({
   },
 });
 
-//Создать экземпляр секции-контейнера для карточек
-const cardList = new Section(renderCard, cardContainerSelector);
+//Получить асинхронно пользователя и отобразить его данные
+api.getUserInfo().then((userObject) => {
+  profileInfo.setUser(userObject);
+});
 
-//Поуличить карточки и отрисовать
+//Поуличить асинхронно карточки и отрисовать
 api
   .getInitialCards()
   .then((initialCards) => {
@@ -147,8 +151,17 @@ function checkValidationAddCardFormBeforOpen() {
 
 //Ф-я обработки сабмита формы профайла
 function handleProfileFormSubmit(inputValues) {
-  //добавить на экран значения
-  profileInfo.setUserInfo(inputValues);
+  const userInfoObject = {
+    name: inputValues.profileNameInput,
+    about: inputValues.ocupationInput,
+  };
+  //Записать значения в сервер
+  api.sendUserInfo(userInfoObject).then((response) => {
+    //добавить на экран значения
+    profileInfo.setUserInfo(response);
+  });
+  /*   //добавить на экран значения
+  profileInfo.setUserInfo(inputValues); */
 }
 
 //Ф-я обработки сабмита формы добавления карточки

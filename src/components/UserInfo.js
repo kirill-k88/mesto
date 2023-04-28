@@ -1,22 +1,48 @@
 export class UserInfo {
-  constructor({ profileNameSelector, profileOcupationSelector }) {
+  constructor({
+    profileAvatar,
+    profileNameSelector,
+    profileOcupationSelector,
+  }) {
+    this._profileAvatarElement = document.querySelector(profileAvatar);
     this._profileNameElement = document.querySelector(profileNameSelector);
     this._profileOcupationElement = document.querySelector(
       profileOcupationSelector
     );
   }
 
-  //Получить данные из тестов профайла в объект
+  //Получить данные пользователя в объект
   getUserInfo = () => {
     return {
-      profileNameInput: this._profileNameElement.textContent,
-      ocupationInput: this._profileOcupationElement.textContent,
+      profileNameInput: this._name,
+      ocupationInput: this._about,
     };
   };
 
-  //Записать данные из объекта в тесты профайла
-  setUserInfo = ({ profileNameInput, ocupationInput }) => {
-    this._profileNameElement.textContent = profileNameInput;
-    this._profileOcupationElement.textContent = ocupationInput;
+  //Получить данные из объекта и отобразить
+  setUserInfo = ({ name, about }) => {
+    this._name = name;
+    this._about = about;
+    this._renderUserInfo();
+  };
+
+  //Отобразить данные пользователя на экране
+  _renderUserInfo = () => {
+    this._profileNameElement.textContent = this._name;
+    this._profileOcupationElement.textContent = this._about;
+  };
+
+  //Отобразить аватар на экране
+  _renderUserAvatar = () => {
+    this._profileAvatarElement.src = this._avatar;
+  };
+
+  //Получить данные пользователя в экземпляр и отобразить
+  setUser = ({ name, about, _id, avatar }) => {
+    this.setUserInfo({ name, about });
+    this._id = _id;
+    this._avatar = avatar;
+    //Выполняется только при загрузке страницы
+    this._renderUserAvatar();
   };
 }
