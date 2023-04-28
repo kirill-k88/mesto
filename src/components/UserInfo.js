@@ -38,11 +38,11 @@ export class UserInfo {
   };
 
   //Получить данные пользователя в экземпляр и отобразить
+  //Выполняется только при загрузке страницы
   setUser = ({ name, about, _id, avatar }) => {
     this.setUserInfo({ name, about });
     this._id = _id;
     this._avatar = avatar;
-    //Выполняется только при загрузке страницы
     this._renderUserAvatar();
   };
 }
