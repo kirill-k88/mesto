@@ -7,6 +7,7 @@ import {
   cardSelectorCollection,
   popupProfileSelectorCollection,
   popupAddCardSelectorCollection,
+  popupConfirmSelectorCollection,
   profileSelectorCollection,
   popupIsOpenedClass,
   closeButtonSelector,
@@ -33,6 +34,9 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 
 //Подключить класс попапа профайла
 import { PopupWithForm } from '../components/PopupWithForm.js';
+
+//Подключить класс попапа профайла
+import { ConfirmPopup } from '../components/ConfirmPopup.js';
 
 //Подключить класс Api
 import { Api } from '../components/Api.js';
@@ -74,21 +78,14 @@ const popupImage = new PopupWithImage(
 //Добавить слушателей попапа картинки
 popupImage.setEventListeners();
 
-//Ф-я создания экземпляра карточки
-function renderCard(cardObj) {
-  const newCard = new Card(
-    cardObj,
-    (cardData) => {
-      popupImage.open(cardData);
-    },
-    cardSelectorCollection
-  );
-  const cardElement = newCard.getCard();
-  cardList.addItem(cardElement);
-}
+//Экземпляр класса попапа confirm
+const popupConfirm = new ConfirmPopup(
+  popupConfirmSelectorCollection,
+  handleConfirmFormSubmit
+);
 
-//Создать экземпляр секции-контейнера для карточек
-const cardList = new Section(renderCard, cardContainerSelector);
+//Устанавить слушателей попапа confirm
+popupConfirm.setEventListeners();
 
 //Создать экземпляр класса Api
 const api = new Api({
@@ -99,14 +96,47 @@ const api = new Api({
   },
 });
 
-//Получить асинхронно пользователя и отобразить его данные
-api.getUserInfo().then((userObject) => {
-  profileInfo.setUser(userObject);
-});
+//Создать экземпляр секции-контейнера для карточек
+const cardList = new Section(renderCard, cardContainerSelector);
 
-//Поуличить асинхронно карточки и отрисовать
-api
-  .getInitialCards()
+//Ф-я создания экземпляра карточки
+function renderCard(cardObj) {
+  const newCard = new Card(
+    cardObj,
+    //Ф-я открытия попапа
+    (cardData) => {
+      popupImage.open(cardData);
+    },
+    //Проверка является ли текущий пользователем владельцем карточки
+    ({ owner }) => {
+      return profileInfo.getUserId() === owner._id;
+    },
+    //открытие попапа подтверждения удаления карточки
+    (id, cardElement) => {
+      popupConfirm.open(id, cardElement);
+    },
+    //Проверка наличия лайка от текущего пользователя
+    ({ likes }) => {
+      likes.forEach((owner) => {
+        if (owner._id === profileInfo.getUserId()) {
+          return true;
+        }
+      });
+      return false;
+    },
+    cardSelectorCollection
+  );
+  const cardElement = newCard.getCard();
+  cardList.addItem(cardElement);
+}
+
+//Получить пользователя и отобразить его данные
+//Поуличить карточки и отрисовать после получения пользователя
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then((values) => {
+    profileInfo.setUser(values[0]);
+    return Promise.resolve(values[1]);
+  })
   .then((initialCards) => {
     //Добавить на страницу карточки из перечня по-умолчанию
     cardList.renderItems(initialCards);
@@ -151,27 +181,63 @@ function checkValidationAddCardFormBeforOpen() {
 
 //Ф-я обработки сабмита формы профайла
 function handleProfileFormSubmit(inputValues) {
+  //изменить текст кнопки на загрузка...
+  this.toggleSubmitButtonText();
   const userInfoObject = {
     name: inputValues.profileNameInput,
     about: inputValues.ocupationInput,
   };
   //Записать значения в сервер
-  api.sendUserInfo(userInfoObject).then((response) => {
-    //добавить на экран значения
-    profileInfo.setUserInfo(response);
-  });
-  /*   //добавить на экран значения
-  profileInfo.setUserInfo(inputValues); */
+  api
+    .sendUserInfo(userInfoObject)
+    .then((response) => {
+      //добавить на экран значения
+      profileInfo.setUserInfo(response);
+      //изменить текст кнопки обратно
+      this.toggleSubmitButtonText();
+      this.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 //Ф-я обработки сабмита формы добавления карточки
 function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
+  //изменить текст кнопки на загрузка...
+  this.toggleSubmitButtonText();
   const cardObj = {
     name: cardNameInput,
     link: cardUrlInput,
   };
-  //Добавить новую карточку в список
-  renderCard(cardObj);
+  //Добавить новую карточку на сервер
+  api
+    .sendNewCard(cardObj)
+    .then((response) => {
+      //Добавить новую карточку в список
+      renderCard(response);
+      //изменить текст кнопки обратно
+      this.toggleSubmitButtonText();
+      this.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+//Ф-я обработки сабмита формы confirm
+function handleConfirmFormSubmit(id, cardElement) {
+  //Ф-я удаления карточки со страницы и сервера
+  api
+    .deleteCard(id)
+    .then(({ message }) => {
+      if (message === 'Пост удалён') {
+        cardElement.remove();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 //включить валидацию формы добавления карточки

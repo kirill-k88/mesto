@@ -68,6 +68,16 @@
       </div>
     </div>
 
+    <div class="popup popup_type_confirm">
+      <div class="popup__container">
+        <button class="popup__button-close common-link" type="button"></button>
+        <form class="popup__form" name="confirm-form" novalidate>
+          <h2 class="popup__title popup__title_isConfirm">Вы уверены?</h2>
+          <button class="popup__button-submit common-link" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+
     <div class="popup popup_type_image">
       <div class="popup__container popup__container_isImage">
         <button class="popup__button-close common-link" type="button"></button>
@@ -84,7 +94,10 @@
         <img class="cards__photo">
         <div class="cards__caption">
           <h2 class="cards__title"></h2>
-          <button class="cards__button-like common-link" type="button"></button>
+          <div class="cards__like-container">
+            <button class="cards__button-like common-link" type="button"></button>
+            <p class="cards__like-count">0</p>
+          </div>
         </div>
       </li>
     </template>

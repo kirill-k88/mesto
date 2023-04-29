@@ -5,8 +5,10 @@ export const cardSelectorCollection = {
   pictureSelector: '.cards__photo',
   titleSelector: '.cards__title',
   buttonRemoveSelector: '.cards__button-remove',
+  buttonRemoveVisibilityClass: 'cards__button-remove_hidden',
   buttonLikeSelector: '.cards__button-like',
   buttonLikeActiveClass: 'cards__button-like_active',
+  likeCountSelector: '.cards__like-count',
 };
 
 //Набор селекторов для работы с попапом картинки
@@ -56,6 +58,15 @@ export const popupAddCardSelectorCollection = {
   inputSelector: inputSelector,
   popupInputHeadingName: 'cardNameInput',
   popupInputOptionName: 'cardUrlInput',
+  popupButtonSubmitSelector: '.popup__button-submit',
+};
+
+//Набор селекторов и имен для работы с попапом подтверждения
+export const popupConfirmSelectorCollection = {
+  popupSelector: '.popup_type_confirm',
+  popupIsOpenedClass: popupIsOpenedClass,
+  closeButtonSelector: closeButtonSelector,
+  popupFormName: 'confirm-form',
   popupButtonSubmitSelector: '.popup__button-submit',
 };
 

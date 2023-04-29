@@ -19,6 +19,10 @@ export class UserInfo {
     };
   };
 
+  getUserId = () => {
+    return this._id;
+  };
+
   //Получить данные из объекта и отобразить
   setUserInfo = ({ name, about }) => {
     this._name = name;

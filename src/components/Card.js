@@ -2,14 +2,19 @@ export class Card {
   constructor(
     cardObj,
     handleCardClick,
+    isOwner,
+    openConfirmPopup,
+    hasLike,
     {
       template,
       elementSelector,
       pictureSelector,
       titleSelector,
       buttonRemoveSelector,
+      buttonRemoveVisibilityClass,
       buttonLikeSelector,
       buttonLikeActiveClass,
+      likeCountSelector,
     }
   ) {
     //селекторы карточки
@@ -18,14 +23,21 @@ export class Card {
     this._pictureSelector = pictureSelector;
     this._titleSelector = titleSelector;
     this._buttonRemoveSelector = buttonRemoveSelector;
+    this._buttonRemoveVisibilityClass = buttonRemoveVisibilityClass;
     this._buttonLikeSelector = buttonLikeSelector;
+    this._likeCountSelector = likeCountSelector;
     //классы для интерактивности карточки
     this._buttonLikeActiveClass = buttonLikeActiveClass;
     //объект со свойствами карточки
     this._cardObj = cardObj;
     //ф-я открытия окна карточки
     this._handleCardClick = handleCardClick;
-
+    //Ф-я проверки является ли текущий пльзователь владельцем карточки
+    this._isOwner = isOwner;
+    //Ф-я проверки лайка от текущего пользователя
+    this._hasLike = hasLike;
+    //Ф-я открытия попапа подтверждения удаления карточки
+    this._openConfirmPopup = openConfirmPopup;
     //Получить содержимое шаблона карточки
     this._cardTemplate = document.querySelector(this._template);
   }
@@ -35,30 +47,21 @@ export class Card {
     evt.target.classList.toggle(this._buttonLikeActiveClass);
   };
 
-  //Ф-я удаления карточки
+  //Ф-я удаления карточки через открытие попапа подтверждения
   _removeCard = () => {
-    this._cardElement.remove();
+    this._openConfirmPopup(this._getCardId(), this._cardElement);
   };
 
   //Ф-я установки листнеров карточки
   _setListeners() {
     //Добавить обработчик событий на кнопку удаления
-    this._cardElement
-      .querySelector(this._buttonRemoveSelector)
-      .addEventListener('click', this._removeCard);
+    this._cardButtonRemoveElement.addEventListener('click', this._removeCard);
     //Добавить обработчик событий на кнопку лайка
-    this._cardElement
-      .querySelector(this._buttonLikeSelector)
-      .addEventListener('click', this._toggleLike);
+    this._cardButtonLikeElement.addEventListener('click', this._toggleLike);
     //Добавить обработчик событий на изображение
     this._cardPicture.addEventListener('click', () => {
       this._handleCardClick(this._cardObj);
     });
-  }
-
-  _getCardImg() {
-    const cardPicture = this._cardElement.querySelector(this._pictureSelector);
-    return cardPicture;
   }
 
   _getCardElement() {
@@ -72,11 +75,46 @@ export class Card {
     return cardElement;
   }
 
+  //получить id карточки
+  _getCardId = () => {
+    return this._cardObj._id;
+  };
+
+  //Cкрыть кнопку удаления чужой карточки
+  _checkButtonDeleteVisibility = () => {
+    if (!this._isOwner(this._cardObj)) {
+      this._cardButtonRemoveElement.classList.add(
+        this._buttonRemoveVisibilityClass
+      );
+    }
+  };
+
+  //Отобразить количество лайков
+  _setLikesNumber = () => {
+    this._likeCountElement.textContent = this._cardObj.likes.length;
+  };
+
   getCard() {
     //получить карточку
     this._cardElement = this._getCardElement();
-    //Наполнить контентом элемент карточки
-    this._cardPicture = this._getCardImg();
+
+    //Наполнить элемент изображения
+    this._cardPicture = this._cardElement.querySelector(this._pictureSelector);
+
+    //Получить элемент кнопки удаления
+    this._cardButtonRemoveElement = this._cardElement.querySelector(
+      this._buttonRemoveSelector
+    );
+
+    //Получить элемент кнопки лайка
+    this._cardButtonLikeElement = this._cardElement.querySelector(
+      this._buttonLikeSelector
+    );
+
+    //Получить элемент счетчика лайков
+    this._likeCountElement = this._cardElement.querySelector(
+      this._likeCountSelector
+    );
 
     this._cardPicture.src = this._cardObj.link;
     this._cardPicture.alt = this._cardObj.name;
@@ -84,6 +122,11 @@ export class Card {
       this._cardObj.name;
     //установить слушателей событий карточки
     this._setListeners();
+    //Установить видимость  кнопки удаления карточки
+    this._checkButtonDeleteVisibility();
+
+    //Отобразить количество лайков
+    this._setLikesNumber();
 
     return this._cardElement;
   }

@@ -7,10 +7,10 @@ export class PopupWithForm extends Popup {
       popupFormName,
       popupInputHeadingName,
       popupInputOptionName,
-      popupButtonSubmitSelector,
       inputSelector,
       popupIsOpenedClass,
       closeButtonSelector,
+      popupButtonSubmitSelector,
     },
     handleFormSubmit
   ) {
@@ -29,7 +29,15 @@ export class PopupWithForm extends Popup {
     this._inputList = this._popupFormElement.querySelectorAll(inputSelector);
 
     //функция обработки сабмита формы
-    this._handleFormSubmit = handleFormSubmit;
+    this._handleFormSubmit = handleFormSubmit.bind(this);
+
+    //Получить элемент кнопки сабмита
+    this._buttonSubmitElement = this._popupFormElement.querySelector(
+      popupButtonSubmitSelector
+    );
+
+    //Для унификации попапов сохраняем текст кнопки сабмита
+    this._buttonSubmitText = this._buttonSubmitElement.textContent;
   }
 
   //Наполнить контентом элементы формы
@@ -55,12 +63,20 @@ export class PopupWithForm extends Popup {
     super.close();
   };
 
+  //Ф-я переключения текста кнопки при загрузке данных
+  toggleSubmitButtonText = () => {
+    if (this._buttonSubmitText != this._buttonSubmitElement.textContent) {
+      this._buttonSubmitElement.textContent = this._buttonSubmitText;
+    } else {
+      this._buttonSubmitElement.textContent = 'Сохранение...';
+    }
+  };
+
   //Переопределенная ф-я установки листнеров
   setEventListeners() {
     this._popupElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.close();
     });
     super.setEventListeners();
   }
