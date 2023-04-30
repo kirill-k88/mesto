@@ -8,6 +8,7 @@ import {
   popupProfileSelectorCollection,
   popupAddCardSelectorCollection,
   popupConfirmSelectorCollection,
+  popupAvatarSelectorCollection,
   profileSelectorCollection,
   popupIsOpenedClass,
   closeButtonSelector,
@@ -53,6 +54,10 @@ const popupAddCardFormElement =
 const popupProfileFormElement =
   document.forms[popupProfileSelectorCollection.popupFormName];
 
+//Получить форму попапа редактирования аватара
+const popupAvatarFormElement =
+  document.forms[popupAvatarSelectorCollection.popupFormName];
+
 //Получить экземпляр класса профайла
 const profileInfo = new UserInfo(profileSelectorCollection);
 
@@ -66,6 +71,12 @@ const popupAddCardFormValidator = new FormValidator(
 const popupProfileFormValidator = new FormValidator(
   formSelectorCollection,
   popupProfileFormElement
+);
+
+//Получить экземпляр валидации для формы profile
+const popupAvatarFormValidator = new FormValidator(
+  formSelectorCollection,
+  popupAvatarFormElement
 );
 
 //Получить экзепляр класса попапа картинки
@@ -116,13 +127,24 @@ function renderCard(cardObj) {
       popupConfirm.open(id, cardElement);
     },
     //Проверка наличия лайка от текущего пользователя
-    ({ likes }) => {
-      likes.forEach((owner) => {
-        if (owner._id === profileInfo.getUserId()) {
+    (likes) => {
+      return likes.find((owner) => {
+        if (owner._id == profileInfo.getUserId()) {
           return true;
         }
       });
-      return false;
+    },
+    //Ф-я установки лайка с отправкой на сервер
+    (_id, card) => {
+      api.sendLike(_id).then((res) => {
+        card.updateLikes(res);
+      });
+    },
+    //Ф-я удаления лайка с отправкой на сервер
+    (_id, card) => {
+      api.deleteLike(_id).then((res) => {
+        card.updateLikes(res);
+      });
     },
     cardSelectorCollection
   );
@@ -153,6 +175,23 @@ const popupProfile = new PopupWithForm(
 
 //Устанавить слушателей попапа профайла
 popupProfile.setEventListeners();
+
+//Экземпляр класса попапа с формаой для аватара
+const popupAvatar = new PopupWithForm(
+  popupAvatarSelectorCollection,
+  handleAvatarFormSubmit
+);
+
+//Устанавить слушателей попапа добавления карточек
+popupAvatar.setEventListeners();
+
+//Ф-я проверки валидации формы редактирования аватара
+function checkValidationAvatarFormBeforOpen() {
+  //проверить валидность формы для отображения кнопки
+  popupAvatarFormValidator.toggleSubmitButtonVisability();
+  //скрыть сообщения о невалидности
+  popupAvatarFormValidator.hideInputErors();
+}
 
 //Ф-я проверки валидации формы профайла при ее открытии
 function checkValidationProfileFormBeforOpen() {
@@ -189,10 +228,32 @@ function handleProfileFormSubmit(inputValues) {
   };
   //Записать значения в сервер
   api
-    .sendUserInfo(userInfoObject)
+    .modifyUserInfo(userInfoObject)
     .then((response) => {
       //добавить на экран значения
       profileInfo.setUserInfo(response);
+      //изменить текст кнопки обратно
+      this.toggleSubmitButtonText();
+      this.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+//Ф-я обработки сабмита формы профайла
+function handleAvatarFormSubmit(inputValues) {
+  //изменить текст кнопки на загрузка...
+  this.toggleSubmitButtonText();
+  const avatarObject = {
+    avatar: inputValues.avatarUrlInput,
+  };
+  //Записать значения в сервер
+  api
+    .modifyAvatar(avatarObject)
+    .then(({ avatar }) => {
+      //добавить на экран значения
+      profileInfo.setAvatar(avatar);
       //изменить текст кнопки обратно
       this.toggleSubmitButtonText();
       this.close();
@@ -257,4 +318,10 @@ buttonEditElement.addEventListener('click', () => {
 buttonAddCardElement.addEventListener('click', () => {
   checkValidationAddCardFormBeforOpen();
   popupAddCard.open();
+});
+
+//Добавить событие нажатия кнопки изменить аватар
+profileInfo.getAvatarElement().addEventListener('click', () => {
+  checkValidationAvatarFormBeforOpen();
+  popupAvatar.open();
 });

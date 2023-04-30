@@ -29,7 +29,7 @@ export class PopupWithForm extends Popup {
     this._inputList = this._popupFormElement.querySelectorAll(inputSelector);
 
     //функция обработки сабмита формы
-    this._handleFormSubmit = handleFormSubmit.bind(this);
+    this._handleFormSubmit = handleFormSubmit;
 
     //Получить элемент кнопки сабмита
     this._buttonSubmitElement = this._popupFormElement.querySelector(

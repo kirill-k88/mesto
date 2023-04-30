@@ -5,6 +5,9 @@ export class Card {
     isOwner,
     openConfirmPopup,
     hasLike,
+    like,
+    dislike,
+
     {
       template,
       elementSelector,
@@ -38,13 +41,41 @@ export class Card {
     this._hasLike = hasLike;
     //Ф-я открытия попапа подтверждения удаления карточки
     this._openConfirmPopup = openConfirmPopup;
+    //ф-я установки записи лайка на сервер
+    this._like = like.bind(this);
+    //ф-я удаления лайка с сервера
+    this._disLike = dislike.bind(this);
     //Получить содержимое шаблона карточки
     this._cardTemplate = document.querySelector(this._template);
   }
 
   //Ф-я снятия установки лайка
-  _toggleLike = (evt) => {
-    evt.target.classList.toggle(this._buttonLikeActiveClass);
+  _toggleLike = () => {
+    const self = this;
+    if (!this._hasLike(this._likeList)) {
+      this._like(this._getCardId(), self);
+    } else {
+      this._disLike(this._getCardId(), self);
+    }
+  };
+
+  //Отобразить количество лайков
+  _setLikesNumber = () => {
+    this._likeCountElement.textContent = this._likeList.length;
+  };
+
+  //Ф-я отображения лкйка
+  updateLikes = (cardObj) => {
+    //поулчить массив лайков
+    this._likeList = cardObj.likes;
+    //отображить лайк
+    if (this._hasLike(this._likeList)) {
+      this._cardButtonLikeElement.classList.add(this._buttonLikeActiveClass);
+    } else {
+      this._cardButtonLikeElement.classList.remove(this._buttonLikeActiveClass);
+    }
+    //Отобразить количество лайков
+    this._setLikesNumber();
   };
 
   //Ф-я удаления карточки через открытие попапа подтверждения
@@ -81,17 +112,12 @@ export class Card {
   };
 
   //Cкрыть кнопку удаления чужой карточки
-  _checkButtonDeleteVisibility = () => {
+  _toggleButtonDeleteVisibility = () => {
     if (!this._isOwner(this._cardObj)) {
       this._cardButtonRemoveElement.classList.add(
         this._buttonRemoveVisibilityClass
       );
     }
-  };
-
-  //Отобразить количество лайков
-  _setLikesNumber = () => {
-    this._likeCountElement.textContent = this._cardObj.likes.length;
   };
 
   getCard() {
@@ -123,10 +149,10 @@ export class Card {
     //установить слушателей событий карточки
     this._setListeners();
     //Установить видимость  кнопки удаления карточки
-    this._checkButtonDeleteVisibility();
+    this._toggleButtonDeleteVisibility();
 
-    //Отобразить количество лайков
-    this._setLikesNumber();
+    //установить лайки
+    this.updateLikes(this._cardObj);
 
     return this._cardElement;
   }

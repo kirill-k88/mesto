@@ -19,9 +19,7 @@ export class UserInfo {
     };
   };
 
-  getUserId = () => {
-    return this._id;
-  };
+  getUserId = () => this._id;
 
   //Получить данные из объекта и отобразить
   setUserInfo = ({ name, about }) => {
@@ -36,17 +34,17 @@ export class UserInfo {
     this._profileOcupationElement.textContent = this._about;
   };
 
-  //Отобразить аватар на экране
-  _renderUserAvatar = () => {
-    this._profileAvatarElement.src = this._avatar;
+  setAvatar = (url) => {
+    this._profileAvatarElement.style.backgroundImage = `url(${url})`;
   };
+
+  getAvatarElement = () => this._profileAvatarElement;
 
   //Получить данные пользователя в экземпляр и отобразить
   //Выполняется только при загрузке страницы
   setUser = ({ name, about, _id, avatar }) => {
     this.setUserInfo({ name, about });
     this._id = _id;
-    this._avatar = avatar;
-    this._renderUserAvatar();
+    this.setAvatar(avatar);
   };
 }

@@ -30,6 +30,17 @@ export const buttonAddCardSelector = '.profile__button-add';
 //Селектор контейнера карточек
 export const cardContainerSelector = '.cards__list';
 
+//Набор селекторов и имен для работы с попапом редактирования аватара
+export const popupAvatarSelectorCollection = {
+  popupSelector: '.popup_type_avatar',
+  popupIsOpenedClass: popupIsOpenedClass,
+  closeButtonSelector: closeButtonSelector,
+  popupFormName: 'avatar-form',
+  inputSelector: inputSelector,
+  popupInputHeadingName: 'avatarUrlInput',
+  popupButtonSubmitSelector: '.popup__button-submit',
+};
+
 //Набор селекторов и имен для работы с попапом редактирования профайла
 export const popupProfileSelectorCollection = {
   popupSelector: '.popup_type_edit',
@@ -44,7 +55,8 @@ export const popupProfileSelectorCollection = {
 
 //Набор селекторов текстов профайла
 export const profileSelectorCollection = {
-  profileAvatar: '.profile__avatar',
+  /* profileAvatar: '.profile__avatar', */
+  profileAvatar: '.profile__button-avatar',
   profileNameSelector: '.profile__name',
   profileOcupationSelector: '.profile__ocupation',
 };
