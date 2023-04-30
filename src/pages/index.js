@@ -135,14 +135,14 @@ function renderCard(cardObj) {
       });
     },
     //Ф-я установки лайка с отправкой на сервер
-    (_id, card) => {
-      api.sendLike(_id).then((res) => {
+    (id, card) => {
+      api.sendLike(id).then((res) => {
         card.updateLikes(res);
       });
     },
     //Ф-я удаления лайка с отправкой на сервер
-    (_id, card) => {
-      api.deleteLike(_id).then((res) => {
+    (id, card) => {
+      api.deleteLike(id).then((res) => {
         card.updateLikes(res);
       });
     },
