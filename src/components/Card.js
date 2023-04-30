@@ -107,9 +107,7 @@ export class Card {
   }
 
   //получить id карточки
-  _getCardId = () => {
-    return this._cardObj._id;
-  };
+  _getCardId = () => this._cardObj._id;
 
   //Cкрыть кнопку удаления чужой карточки
   _toggleButtonDeleteVisibility = () => {

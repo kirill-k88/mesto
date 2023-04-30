@@ -307,6 +307,9 @@ popupAddCardFormValidator.enableValidation();
 //включить валидацию формы
 popupProfileFormValidator.enableValidation();
 
+//включить валидацию формы
+popupAvatarFormValidator.enableValidation();
+
 //Добавить событие нажатия кнопки редактировать
 buttonEditElement.addEventListener('click', () => {
   popupProfile.setInputValues(profileInfo.getUserInfo());
