@@ -111,7 +111,7 @@ const api = new Api({
 const cardList = new Section(renderCard, cardContainerSelector);
 
 //Ф-я создания экземпляра карточки
-function renderCard(cardObj) {
+function renderCard(cardObj, isFromList) {
   const newCard = new Card(
     cardObj,
     //Ф-я открытия попапа
@@ -149,7 +149,7 @@ function renderCard(cardObj) {
     cardSelectorCollection
   );
   const cardElement = newCard.getCard();
-  cardList.addItem(cardElement);
+  cardList.addItem(cardElement, isFromList);
 }
 
 //Получить пользователя и отобразить его данные
@@ -276,7 +276,7 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     .sendNewCard(cardObj)
     .then((response) => {
       //Добавить новую карточку в список
-      renderCard(response);
+      renderCard(response, false);
       //изменить текст кнопки обратно
       this.toggleSubmitButtonText();
       this.close();
