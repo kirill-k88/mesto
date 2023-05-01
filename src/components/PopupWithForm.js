@@ -4,9 +4,7 @@ export class PopupWithForm extends Popup {
   constructor(
     {
       popupSelector,
-      popupFormName,
-      popupInputHeadingName,
-      popupInputOptionName,
+      popupFormSelector,
       inputSelector,
       popupIsOpenedClass,
       closeButtonSelector,
@@ -17,13 +15,8 @@ export class PopupWithForm extends Popup {
     super(popupSelector, popupIsOpenedClass, closeButtonSelector);
 
     //получить форму
-    this._popupFormElement = document.forms[popupFormName];
-
-    //получить элементы формы
-    this._popupInputHeadingElement =
-      this._popupFormElement.elements[popupInputHeadingName];
-    this._popupInputOptionElement =
-      this._popupFormElement.elements[popupInputOptionName];
+    this._popupFormElement =
+      this._popupElement.querySelector(popupFormSelector);
 
     //получить все инпуты
     this._inputList = this._popupFormElement.querySelectorAll(inputSelector);

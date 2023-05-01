@@ -36,8 +36,8 @@ export const popupAvatarSelectorCollection = {
   popupIsOpenedClass: popupIsOpenedClass,
   closeButtonSelector: closeButtonSelector,
   popupFormName: 'avatar-form',
+  popupFormSelector: '.popup__form_type_avatar',
   inputSelector: inputSelector,
-  popupInputHeadingName: 'avatarUrlInput',
   popupButtonSubmitSelector: '.popup__button-submit',
 };
 
@@ -47,15 +47,13 @@ export const popupProfileSelectorCollection = {
   popupIsOpenedClass: popupIsOpenedClass,
   closeButtonSelector: closeButtonSelector,
   popupFormName: 'profile-form',
+  popupFormSelector: '.popup__form_type_edit',
   inputSelector: inputSelector,
-  popupInputHeadingName: 'profileNameInput',
-  popupInputOptionName: 'ocupationInput',
   popupButtonSubmitSelector: '.popup__button-submit',
 };
 
 //Набор селекторов текстов профайла
 export const profileSelectorCollection = {
-  /* profileAvatar: '.profile__avatar', */
   profileAvatar: '.profile__button-avatar',
   profileNameSelector: '.profile__name',
   profileOcupationSelector: '.profile__ocupation',
@@ -67,9 +65,8 @@ export const popupAddCardSelectorCollection = {
   popupIsOpenedClass: popupIsOpenedClass,
   closeButtonSelector: closeButtonSelector,
   popupFormName: 'cardAdd-form',
+  popupFormSelector: '.popup__form_type_add',
   inputSelector: inputSelector,
-  popupInputHeadingName: 'cardNameInput',
-  popupInputOptionName: 'cardUrlInput',
   popupButtonSubmitSelector: '.popup__button-submit',
 };
 
@@ -79,6 +76,7 @@ export const popupConfirmSelectorCollection = {
   popupIsOpenedClass: popupIsOpenedClass,
   closeButtonSelector: closeButtonSelector,
   popupFormName: 'confirm-form',
+  popupFormSelector: '.popup__form_type_confirm',
   popupButtonSubmitSelector: '.popup__button-submit',
 };
 

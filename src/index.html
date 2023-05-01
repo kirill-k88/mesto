@@ -42,7 +42,7 @@
     <div class="popup popup_type_edit">
       <div class="popup__container">
         <button class="popup__button-close common-link" type="button"></button>
-        <form class="popup__form" name="profile-form" novalidate>
+        <form class="popup__form popup__form_type_edit" name="profile-form" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
           <input class="popup__input popup__input_content_heading" name="profileNameInput" type="text" placeholder="Имя"
             required minlength="2" maxlength="40">
@@ -58,7 +58,7 @@
     <div class="popup popup_type_add">
       <div class="popup__container">
         <button class="popup__button-close common-link" type="button"></button>
-        <form class="popup__form" name="cardAdd-form" novalidate>
+        <form class="popup__form popup__form_type_add" name="cardAdd-form" novalidate>
           <h2 class="popup__title">Новое место</h2>
           <input class="popup__input popup__input_content_heading" name="cardNameInput" type="text"
             placeholder="Название" required minlength="2" maxlength="30">
@@ -74,7 +74,7 @@
     <div class="popup popup_type_avatar">
       <div class="popup__container">
         <button class="popup__button-close common-link" type="button"></button>
-        <form class="popup__form" name="avatar-form" novalidate>
+        <form class="popup__form popup__form_type_avatar" name="avatar-form" novalidate>
           <h2 class="popup__title">Обновить аватар</h2>
           <input class="popup__input popup__input_content_option" name="avatarUrlInput" placeholder="Ссылка на аватар"
             required type="url">
@@ -88,7 +88,7 @@
     <div class="popup popup_type_confirm">
       <div class="popup__container">
         <button class="popup__button-close common-link" type="button"></button>
-        <form class="popup__form" name="confirm-form" novalidate>
+        <form class="popup__form popup__form_type_confirm" name="confirm-form" novalidate>
           <h2 class="popup__title popup__title_isConfirm">Вы уверены?</h2>
           <button class="popup__button-submit common-link" type="submit">Да</button>
         </form>

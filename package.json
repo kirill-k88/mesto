@@ -4,7 +4,8 @@
   "description": "- Cодержит информацию о достопримечательностях России\r - Есть возможность просматривать карточки с фотографиями, ставить лайки\r - Есть возможность редактировать автора карточек\r - Есть возможность добавлять карточки\r - Есть возможность ставить лайки карточкам\r - Есть проверка правильсности ввода данных на формах",
   "main": "./src/pages/index.js",
   "scripts": {
-    "dev": "webpack serve",
+    "open-browser": "start http://localhost:8086",
+    "dev": "npm run open-browser && webpack serve",
     "build": "webpack --mode production",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

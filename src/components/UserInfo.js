@@ -14,8 +14,8 @@ export class UserInfo {
   //Получить данные пользователя в объект
   getUserInfo = () => {
     return {
-      profileNameInput: this._name,
-      ocupationInput: this._about,
+      profileNameInput: this._profileNameElement.textContent,
+      ocupationInput: this._profileOcupationElement.textContent,
     };
   };
 
@@ -23,15 +23,8 @@ export class UserInfo {
 
   //Получить данные из объекта и отобразить
   setUserInfo = ({ name, about }) => {
-    this._name = name;
-    this._about = about;
-    this._renderUserInfo();
-  };
-
-  //Отобразить данные пользователя на экране
-  _renderUserInfo = () => {
-    this._profileNameElement.textContent = this._name;
-    this._profileOcupationElement.textContent = this._about;
+    this._profileNameElement.textContent = name;
+    this._profileOcupationElement.textContent = about;
   };
 
   setAvatar = (url) => {

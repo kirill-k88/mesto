@@ -110,8 +110,8 @@ const api = new Api({
 //Создать экземпляр секции-контейнера для карточек
 const cardList = new Section(renderCard, cardContainerSelector);
 
-//Ф-я создания экземпляра карточки
-function renderCard(cardObj, isFromList) {
+//Ф-я создания карточки
+function createCard(cardObj) {
   const newCard = new Card(
     cardObj,
     //Ф-я открытия попапа
@@ -136,20 +136,34 @@ function renderCard(cardObj, isFromList) {
     },
     //Ф-я установки лайка с отправкой на сервер
     (id, card) => {
-      api.sendLike(id).then((res) => {
-        card.updateLikes(res);
-      });
+      api
+        .sendLike(id)
+        .then((res) => {
+          card.updateLikes(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     //Ф-я удаления лайка с отправкой на сервер
     (id, card) => {
-      api.deleteLike(id).then((res) => {
-        card.updateLikes(res);
-      });
+      api
+        .deleteLike(id)
+        .then((res) => {
+          card.updateLikes(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     cardSelectorCollection
   );
-  const cardElement = newCard.getCard();
-  cardList.addItem(cardElement, isFromList);
+  return newCard.getCard();
+}
+
+//Ф-я добавления карточки на экран
+function renderCard(cardObj, isFromList) {
+  cardList.addItem(createCard(cardObj), isFromList);
 }
 
 //Получить пользователя и отобразить его данные
@@ -221,7 +235,7 @@ function checkValidationAddCardFormBeforOpen() {
 //Ф-я обработки сабмита формы профайла
 function handleProfileFormSubmit(inputValues) {
   //изменить текст кнопки на загрузка...
-  this.toggleSubmitButtonText();
+  popupProfile.toggleSubmitButtonText();
   const userInfoObject = {
     name: inputValues.profileNameInput,
     about: inputValues.ocupationInput,
@@ -232,19 +246,21 @@ function handleProfileFormSubmit(inputValues) {
     .then((response) => {
       //добавить на экран значения
       profileInfo.setUserInfo(response);
-      //изменить текст кнопки обратно
-      this.toggleSubmitButtonText();
-      this.close();
+      popupProfile.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      //изменить текст кнопки обратно
+      popupProfile.toggleSubmitButtonText();
     });
 }
 
 //Ф-я обработки сабмита формы профайла
 function handleAvatarFormSubmit(inputValues) {
   //изменить текст кнопки на загрузка...
-  this.toggleSubmitButtonText();
+  popupAvatar.toggleSubmitButtonText();
   const avatarObject = {
     avatar: inputValues.avatarUrlInput,
   };
@@ -254,19 +270,21 @@ function handleAvatarFormSubmit(inputValues) {
     .then(({ avatar }) => {
       //добавить на экран значения
       profileInfo.setAvatar(avatar);
-      //изменить текст кнопки обратно
-      this.toggleSubmitButtonText();
-      this.close();
+      popupAvatar.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      //изменить текст кнопки обратно
+      popupAvatar.toggleSubmitButtonText();
     });
 }
 
 //Ф-я обработки сабмита формы добавления карточки
 function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
   //изменить текст кнопки на загрузка...
-  this.toggleSubmitButtonText();
+  popupAddCard.toggleSubmitButtonText();
   const cardObj = {
     name: cardNameInput,
     link: cardUrlInput,
@@ -277,27 +295,36 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     .then((response) => {
       //Добавить новую карточку в список
       renderCard(response, false);
-      //изменить текст кнопки обратно
-      this.toggleSubmitButtonText();
-      this.close();
+      popupAddCard.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      //изменить текст кнопки обратно
+      popupAddCard.toggleSubmitButtonText();
     });
 }
 
 //Ф-я обработки сабмита формы confirm
-function handleConfirmFormSubmit(id, cardElement) {
+function handleConfirmFormSubmit(id) {
   //Ф-я удаления карточки со страницы и сервера
+  //изменить текст кнопки на загрузка...
+  popupConfirm.toggleSubmitButtonText();
   api
     .deleteCard(id)
     .then(({ message }) => {
       if (message === 'Пост удалён') {
-        cardElement.remove();
+        popupConfirm.getCardElement().remove();
+        popupConfirm.close();
       }
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      //изменить текст кнопки обратно
+      popupConfirm.toggleSubmitButtonText();
     });
 }
 
