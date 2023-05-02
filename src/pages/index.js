@@ -110,6 +110,9 @@ const api = new Api({
 //Создать экземпляр секции-контейнера для карточек
 const cardList = new Section(renderCard, cardContainerSelector);
 
+//Массив для хранения экземпляров класса Card
+const cards = {};
+
 //Ф-я создания карточки
 function createCard(cardObj) {
   const newCard = new Card(
@@ -123,8 +126,8 @@ function createCard(cardObj) {
       return profileInfo.getUserId() === owner._id;
     },
     //открытие попапа подтверждения удаления карточки
-    (id, cardElement) => {
-      popupConfirm.open(id, cardElement);
+    (id) => {
+      popupConfirm.open(id);
     },
     //Проверка наличия лайка от текущего пользователя
     (likes) => {
@@ -158,6 +161,10 @@ function createCard(cardObj) {
     },
     cardSelectorCollection
   );
+
+  //Добавить карточку в список
+  cards[cardObj._id] = newCard;
+
   return newCard.getCard();
 }
 
@@ -306,6 +313,12 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     });
 }
 
+//ф-я удаления карточки с экрана и из саиска экземпляров класса Card
+function removeCard(id) {
+  cards[id].removeCard();
+  delete cards[id];
+}
+
 //Ф-я обработки сабмита формы confirm
 function handleConfirmFormSubmit(id) {
   //Ф-я удаления карточки со страницы и сервера
@@ -315,7 +328,7 @@ function handleConfirmFormSubmit(id) {
     .deleteCard(id)
     .then(({ message }) => {
       if (message === 'Пост удалён') {
-        popupConfirm.getCardElement().remove();
+        removeCard(id);
         popupConfirm.close();
       }
     })

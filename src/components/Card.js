@@ -118,6 +118,11 @@ export class Card {
     }
   };
 
+  //ф-я удаления карточки
+  removeCard = () => {
+    this._cardElement.remove();
+  };
+
   getCard() {
     //получить карточку
     this._cardElement = this._getCardElement();

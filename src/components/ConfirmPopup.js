@@ -29,9 +29,8 @@ export class ConfirmPopup extends Popup {
     this._buttonSubmitText = this._buttonSubmitElement.textContent;
   }
 
-  open = (cardId, cardElement) => {
+  open = (cardId) => {
     this._cardId = cardId;
-    this._cardElement = cardElement;
     super.open();
   };
 
@@ -43,8 +42,6 @@ export class ConfirmPopup extends Popup {
       this._buttonSubmitElement.textContent = 'Сохранение...';
     }
   };
-
-  getCardElement = () => this._cardElement;
 
   //Переопределенная ф-я установки листнеров
   setEventListeners = () => {
