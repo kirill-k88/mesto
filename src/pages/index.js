@@ -110,7 +110,7 @@ const api = new Api({
 //Создать экземпляр секции-контейнера для карточек
 const cardList = new Section(renderCard, cardContainerSelector);
 
-//Массив для хранения экземпляров класса Card
+//Объект для хранения экземпляров класса Card
 const cards = {};
 
 //Ф-я создания карточки
