@@ -113,6 +113,28 @@ const cardList = new Section(renderCard, cardContainerSelector);
 //Объект для хранения экземпляров класса Card
 const cards = {};
 
+//Ф-я обработки сабмита формы confirm
+function handleConfirmFormSubmit(card) {
+  //Ф-я удаления карточки со страницы и сервера
+  //изменить текст кнопки на загрузка...
+  popupConfirm.toggleSubmitButtonText();
+  api
+    .deleteCard(card.getCardId())
+    .then(({ message }) => {
+      if (message === 'Пост удалён') {
+        card.removeCard();
+        popupConfirm.close();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      //изменить текст кнопки обратно
+      popupConfirm.toggleSubmitButtonText();
+    });
+}
+
 //Ф-я создания карточки
 function createCard(cardObj) {
   const newCard = new Card(
@@ -311,28 +333,6 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     .finally(() => {
       //изменить текст кнопки обратно
       popupAddCard.toggleSubmitButtonText();
-    });
-}
-
-//Ф-я обработки сабмита формы confirm
-function handleConfirmFormSubmit(card) {
-  //Ф-я удаления карточки со страницы и сервера
-  //изменить текст кнопки на загрузка...
-  popupConfirm.toggleSubmitButtonText();
-  api
-    .deleteCard(card.getCardId())
-    .then(({ message }) => {
-      if (message === 'Пост удалён') {
-        card.removeCard();
-        popupConfirm.close();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      //изменить текст кнопки обратно
-      popupConfirm.toggleSubmitButtonText();
     });
 }
 
