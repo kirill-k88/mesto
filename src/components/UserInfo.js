@@ -12,24 +12,24 @@ export class UserInfo {
   }
 
   //Получить данные пользователя в объект
-  getUserInfo = () => {
+  getUserInfo() {
     return {
       profileNameInput: this._profileNameElement.textContent,
       ocupationInput: this._profileOcupationElement.textContent,
     };
-  };
+  }
 
   getUserId = () => this._id;
 
   //Получить данные из объекта и отобразить
-  setUserInfo = ({ name, about }) => {
+  setUserInfo({ name, about }) {
     this._profileNameElement.textContent = name;
     this._profileOcupationElement.textContent = about;
-  };
+  }
 
-  setAvatar = (url) => {
+  setAvatar(url) {
     this._profileAvatarElement.style.backgroundImage = `url(${url})`;
-  };
+  }
 
   getAvatarElement = () => this._profileAvatarElement;
 

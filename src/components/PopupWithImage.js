@@ -15,10 +15,10 @@ export class PopupWithImage extends Popup {
   }
 
   //переопределенная ф-я открытия попапа
-  open = ({ link, name }) => {
+  open({ link, name }) {
     this._figureImgElement.src = link;
     this._figureImgElement.alt = name;
     this._figureCaptionElement.textContent = name;
     super.open();
-  };
+  }
 }

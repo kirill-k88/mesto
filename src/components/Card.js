@@ -3,7 +3,7 @@ export class Card {
     cardObj,
     handleCardClick,
     isOwner,
-    openConfirmPopup,
+    handleClickRemoveButton,
     hasLike,
     like,
     dislike,
@@ -35,12 +35,14 @@ export class Card {
     this._cardObj = cardObj;
     //ф-я открытия окна карточки
     this._handleCardClick = handleCardClick;
+    //Ф-я открытия попапа подтверждения удаления карточки
+    this._handleClickRemoveButton = handleClickRemoveButton;
     //Ф-я проверки является ли текущий пльзователь владельцем карточки
     this._isOwner = isOwner;
     //Ф-я проверки лайка от текущего пользователя
     this._hasLike = hasLike;
-    //Ф-я открытия попапа подтверждения удаления карточки
-    this._openConfirmPopup = openConfirmPopup;
+
+    /* this._openConfirmPopup = openConfirmPopup; */
     //ф-я установки записи лайка на сервер
     this._like = like.bind(this);
     //ф-я удаления лайка с сервера
@@ -53,16 +55,16 @@ export class Card {
   _toggleLike = () => {
     const self = this;
     if (!this._hasLike(this._likeList)) {
-      this._like(this._getCardId(), self);
+      this._like(this.getCardId(), self);
     } else {
-      this._disLike(this._getCardId(), self);
+      this._disLike(this.getCardId(), self);
     }
   };
 
   //Отобразить количество лайков
-  _setLikesNumber = () => {
+  _setLikesNumber() {
     this._likeCountElement.textContent = this._likeList.length;
-  };
+  }
 
   //Ф-я отображения лкйка
   updateLikes = (cardObj) => {
@@ -78,15 +80,12 @@ export class Card {
     this._setLikesNumber();
   };
 
-  //Ф-я удаления карточки через открытие попапа подтверждения
-  _removeCard = () => {
-    this._openConfirmPopup(this._getCardId(), this._cardElement);
-  };
-
   //Ф-я установки листнеров карточки
   _setListeners() {
     //Добавить обработчик событий на кнопку удаления
-    this._cardButtonRemoveElement.addEventListener('click', this._removeCard);
+    this._cardButtonRemoveElement.addEventListener('click', () => {
+      this._handleClickRemoveButton(this);
+    });
     //Добавить обработчик событий на кнопку лайка
     this._cardButtonLikeElement.addEventListener('click', this._toggleLike);
     //Добавить обработчик событий на изображение
@@ -107,21 +106,21 @@ export class Card {
   }
 
   //получить id карточки
-  _getCardId = () => this._cardObj._id;
+  getCardId = () => this._cardObj._id;
 
   //Cкрыть кнопку удаления чужой карточки
-  _toggleButtonDeleteVisibility = () => {
+  _toggleButtonDeleteVisibility() {
     if (!this._isOwner(this._cardObj)) {
       this._cardButtonRemoveElement.classList.add(
         this._buttonRemoveVisibilityClass
       );
     }
-  };
+  }
 
   //ф-я удаления карточки
-  removeCard = () => {
+  removeCard() {
     this._cardElement.remove();
-  };
+  }
 
   getCard() {
     //получить карточку

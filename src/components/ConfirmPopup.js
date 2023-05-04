@@ -1,24 +1,18 @@
 import Popup from './Popup.js';
 
 export class ConfirmPopup extends Popup {
-  constructor(
-    {
-      popupSelector,
-      popupFormSelector,
-      popupIsOpenedClass,
-      closeButtonSelector,
-      popupButtonSubmitSelector,
-    },
-    handleFormSubmit
-  ) {
+  constructor({
+    popupSelector,
+    popupFormSelector,
+    popupIsOpenedClass,
+    closeButtonSelector,
+    popupButtonSubmitSelector,
+  }) {
     super(popupSelector, popupIsOpenedClass, closeButtonSelector);
 
     //получить форму
     this._popupFormElement =
       this._popupElement.querySelector(popupFormSelector);
-
-    //функция обработки сабмита формы
-    this._handleFormSubmit = handleFormSubmit;
 
     //получить элементк кнопки сабмита
     this._buttonSubmitElement = this._popupFormElement.querySelector(
@@ -29,26 +23,29 @@ export class ConfirmPopup extends Popup {
     this._buttonSubmitText = this._buttonSubmitElement.textContent;
   }
 
-  open = (cardId) => {
-    this._cardId = cardId;
-    super.open();
-  };
-
   //Ф-я переключения текста кнопки при загрузке данных
-  toggleSubmitButtonText = () => {
+  toggleSubmitButtonText() {
     if (this._buttonSubmitText != this._buttonSubmitElement.textContent) {
       this._buttonSubmitElement.textContent = this._buttonSubmitText;
     } else {
       this._buttonSubmitElement.textContent = 'Сохранение...';
     }
-  };
+  }
 
-  //Переопределенная ф-я установки листнеров
-  setEventListeners = () => {
-    this._popupElement.addEventListener('submit', (evt) => {
+  setSubmitAction(handleSubmit, card) {
+    //именованая функция, чтобы можно было удалить листнер
+    this._handleSubmit = function (evt) {
       evt.preventDefault();
-      this._handleFormSubmit(this._cardId);
-    });
-    super.setEventListeners();
-  };
+      handleSubmit(card);
+    };
+
+    this._popupElement.addEventListener('submit', this._handleSubmit);
+  }
+
+  close() {
+    //удалить листнер, завязаный на конкретный card
+    this._popupElement.removeEventListener('submit', this._handleSubmit);
+
+    super.close();
+  }
 }

@@ -34,11 +34,11 @@ export class PopupWithForm extends Popup {
   }
 
   //Наполнить контентом элементы формы
-  setInputValues = (inputValues) => {
+  setInputValues(inputValues) {
     this._inputList.forEach((input) => {
       input.value = inputValues[input.name];
     });
-  };
+  }
 
   //Получить тексты полей в объект
   _getInputValues = () => {
@@ -50,20 +50,20 @@ export class PopupWithForm extends Popup {
   };
 
   //переопределенная функция закрытия
-  close = () => {
+  close() {
     //сброс полей формы
     this._popupFormElement.reset();
     super.close();
-  };
+  }
 
   //Ф-я переключения текста кнопки при загрузке данных
-  toggleSubmitButtonText = () => {
+  toggleSubmitButtonText() {
     if (this._buttonSubmitText != this._buttonSubmitElement.textContent) {
       this._buttonSubmitElement.textContent = this._buttonSubmitText;
     } else {
       this._buttonSubmitElement.textContent = 'Сохранение...';
     }
-  };
+  }
 
   //Переопределенная ф-я установки листнеров
   setEventListeners() {

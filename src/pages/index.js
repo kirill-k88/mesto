@@ -125,9 +125,10 @@ function createCard(cardObj) {
     ({ owner }) => {
       return profileInfo.getUserId() === owner._id;
     },
-    //открытие попапа подтверждения удаления карточки
-    (id) => {
-      popupConfirm.open(id);
+    //обработка удаления карточки
+    (card) => {
+      popupConfirm.setSubmitAction(handleConfirmFormSubmit, card);
+      popupConfirm.open();
     },
     //Проверка наличия лайка от текущего пользователя
     (likes) => {
@@ -313,22 +314,16 @@ function handleAddCardFormSubmit({ cardNameInput, cardUrlInput }) {
     });
 }
 
-//ф-я удаления карточки с экрана и из саиска экземпляров класса Card
-function removeCard(id) {
-  cards[id].removeCard();
-  delete cards[id];
-}
-
 //Ф-я обработки сабмита формы confirm
-function handleConfirmFormSubmit(id) {
+function handleConfirmFormSubmit(card) {
   //Ф-я удаления карточки со страницы и сервера
   //изменить текст кнопки на загрузка...
   popupConfirm.toggleSubmitButtonText();
   api
-    .deleteCard(id)
+    .deleteCard(card.getCardId())
     .then(({ message }) => {
       if (message === 'Пост удалён') {
-        removeCard(id);
+        card.removeCard();
         popupConfirm.close();
       }
     })
